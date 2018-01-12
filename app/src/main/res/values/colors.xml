@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#DCD9CF</color>
+    <color name="colorPrimaryDark">#DCD9CF</color>
+    <color name="colorAccent">#f98d2c</color>
+
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <color name="textPrimary">#4e5864</color>
+    <color name="textSecond">#8d9ca9</color>
+    <color name="textDark">#202020</color>
+
+    <color name="black_alpha_10">#1A000000</color>
+    <color name="black_alpha_20">#33000000</color>
+    <color name="black_alpha_30">#4D000000</color>
+    <color name="black_alpha_40">#66000000</color>
+    <color name="black_alpha_50">#80000000</color>
+    <color name="black_alpha_60">#99000000</color>
+    <color name="black_alpha_70">#B3000000</color>
+    <color name="black_alpha_80">#CC000000</color>
+    <color name="black_alpha_90">#E6000000</color>
+
+    <color name="white_alpha_112">#70ffffff</color>
+    <color name="white_alpha_128">#80ffffff</color>
+    <color name="white_alpha_144">#90ffffff</color>
+    <color name="white_alpha_16">#10ffffff</color>
+    <color name="white_alpha_160">#a0ffffff</color>
+    <color name="white_alpha_176">#b0ffffff</color>
+    <color name="white_alpha_192">#c0ffffff</color>
+    <color name="white_alpha_208">#d0ffffff</color>
+    <color name="white_alpha_224">#e0ffffff</color>
+    <color name="white_alpha_240">#f0ffffff</color>
+    <color name="white_alpha_32">#20ffffff</color>
+    <color name="white_alpha_48">#30ffffff</color>
+    <color name="white_alpha_64">#40ffffff</color>
+    <color name="white_alpha_80">#50ffffff</color>
+    <color name="white_alpha_96">#60ffffff</color>
+
+
+</resources>

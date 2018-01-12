@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.wenjian.myplayer.ui.main.MainActivity">
+
+    <FrameLayout
+        android:id="@+id/lay_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </FrameLayout>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:elevation="@dimen/dp_4"
+        android:outlineProvider="bounds"
+        android:translationZ="@dimen/dp_4"
+        app:itemIconTint="@color/nav_icon"
+        app:itemTextColor="@color/nav_icon"
+        app:menu="@menu/main_tab"
+        tools:targetApi="lollipop">
+
+    </android.support.design.widget.BottomNavigationView>
+
+
+</LinearLayout>

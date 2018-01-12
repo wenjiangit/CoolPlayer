@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">MyPlayer</string>
+    <string name="loading">loading...</string>
+
+
+    <string name="network_error">你的网络不给力哦~~~</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_home">首页</string>
+    <string name="title_finder">发现</string>
+    <string name="title_account">我的</string>
+    <string name="label_search">搜索</string>
+</resources>

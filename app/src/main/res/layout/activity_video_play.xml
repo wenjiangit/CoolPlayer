@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.wenjian.myplayer.ui.videoplay.VideoPlayActivity">
+
+
+    <com.xiao.nicevideoplayer.NiceVideoPlayer
+        android:id="@+id/video_player"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+    </com.xiao.nicevideoplayer.NiceVideoPlayer>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <TextView
+            android:id="@+id/tv_video_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:textColor="@color/textPrimary"
+            android:textSize="14sp"
+            tools:text="影片名" />
+
+
+        <ImageView
+            android:id="@+id/iv_share"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/ic_touch_menu"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_share_black_24dp"
+            android:tint="@color/colorAccent" />
+
+        <ImageView
+            android:id="@+id/iv_star"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/iv_share"
+            android:background="@drawable/ic_touch_menu"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_star_border_black_24dp"
+            android:tint="@color/colorAccent" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/comment_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black_alpha_10"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/dp_10">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+</LinearLayout>
