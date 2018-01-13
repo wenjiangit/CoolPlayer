@@ -559,6 +559,7 @@ public class NiceVideoPlayer extends FrameLayout
 
         // 隐藏ActionBar、状态栏，并横屏
         NiceUtil.hideActionBar(mContext);
+        NiceUtil.hideNavigationBar(mContext);
         NiceUtil.scanForActivity(mContext)
                 .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
@@ -590,6 +591,7 @@ public class NiceVideoPlayer extends FrameLayout
     public boolean exitFullScreen() {
         if (mCurrentMode == MODE_FULL_SCREEN) {
             NiceUtil.showActionBar(mContext);
+            NiceUtil.showNavigationBar(mContext);
             NiceUtil.scanForActivity(mContext)
                     .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 

@@ -30,8 +30,8 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginStart="@dimen/dp_10"
             android:textColor="@color/textDark"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textSize="14sp"
+            />
 
 
     </RelativeLayout>

@@ -3,10 +3,13 @@ package com.xiao.nicevideoplayer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.util.TypedValue;
+import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 
 import java.util.Formatter;
@@ -153,4 +156,27 @@ public class NiceUtil {
                 Context.MODE_PRIVATE)
                 .getLong(url, 0);
     }
+
+    public static void hideNavigationBar(Context context) {
+        View decorView = scanForActivity(context)
+                .getWindow().getDecorView();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            int uiFlags = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiFlags);
+        } else {
+            decorView.setSystemUiVisibility(View.GONE);
+        }
+    }
+
+    public static void showNavigationBar(Context context) {
+        Window window = scanForActivity(context).getWindow();
+        View decorView = window.getDecorView();
+        decorView.setSystemUiVisibility(
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        );
+
+    }
+
 }

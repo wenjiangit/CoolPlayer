@@ -1,5 +1,8 @@
 package com.wenjian.myplayer.ui.videoplay;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -30,6 +33,7 @@ public class CommentRecyclerAdapter extends BaseQuickAdapter<Comment,BaseViewHol
 
         Glide.with(mContext)
                 .load(item.getUserPic())
+                .error(new ColorDrawable(Color.GRAY))
                 .centerCrop()
                 .into((CircleImageView) helper.getView(R.id.cv_pic));
 

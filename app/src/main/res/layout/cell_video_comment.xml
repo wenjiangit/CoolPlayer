@@ -6,6 +6,8 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/dp_4"
     android:elevation="0dp"
+    android:translationX="0dp"
+    android:outlineProvider="none"
     app:cardUseCompatPadding="true"
     tools:targetApi="lollipop">
 
@@ -53,7 +55,7 @@
             android:maxLines="2"
             android:maxWidth="300dp"
             android:textColor="@color/textDark"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
 
     </RelativeLayout>
