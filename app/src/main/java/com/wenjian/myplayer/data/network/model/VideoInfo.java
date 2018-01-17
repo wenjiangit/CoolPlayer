@@ -3,7 +3,9 @@ package com.wenjian.myplayer.data.network.model;
 import android.text.TextUtils;
 
 import com.google.gson.annotations.Expose;
+import com.xiao.nicevideoplayer.Clarity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,7 +52,9 @@ public class VideoInfo {
     private String htmlURL;
     @Expose
     private List<ShowDetail> list;
-    /**超清*/
+    /**
+     * 超清
+     */
     @Expose
     private String SDURL;
     @Expose
@@ -269,4 +273,18 @@ public class VideoInfo {
             return smoothURL;
         }
     }
+
+    /**
+     * 获取清晰度
+     *
+     * @return 清晰度列表
+     */
+    public List<Clarity> getClarity() {
+        List<Clarity> result = new ArrayList<>();
+        result.add(new Clarity("超清", "720", SDURL));
+        result.add(new Clarity("高清", "480", HDURL));
+        result.add(new Clarity("标清", "270", smoothURL));
+        return result;
+    }
+
 }

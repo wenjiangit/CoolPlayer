@@ -54,7 +54,7 @@ public class NiceVideoPlayerManager {
         }
     }
 
-    public boolean onBackPressd() {
+    public boolean onBackPressed() {
         if (mVideoPlayer != null) {
             if (mVideoPlayer.isFullScreen()) {
                 return mVideoPlayer.exitFullScreen();

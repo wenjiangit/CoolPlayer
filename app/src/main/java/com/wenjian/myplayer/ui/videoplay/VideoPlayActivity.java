@@ -170,7 +170,7 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
 
     @Override
     public void onBackPressed() {
-        if (!NiceVideoPlayerManager.instance().onBackPressd()) {
+        if (!NiceVideoPlayerManager.instance().onBackPressed()) {
             super.onBackPressed();
         }
     }
@@ -186,7 +186,7 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
         if (mVideoPlayer.isPlaying()) {
             mController.reset2Start();
         }
-        mVideoPlayer.setUp(info.getVideoSrc(), null);
+        mController.setClarity(info.getClarity(), 0);
         mController.autoplay();
         mTvVideoName.setText(info.getTitle());
         mAdapter.setNewData(info.getList());
