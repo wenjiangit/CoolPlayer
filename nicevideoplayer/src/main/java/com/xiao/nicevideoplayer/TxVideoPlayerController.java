@@ -82,6 +82,7 @@ public class TxVideoPlayerController
     private ChangeClarityDialog mClarityDialog;
 
     private boolean hasRegisterBatteryReceiver; // 是否已经注册了电池广播
+    private ProgressBar mPbProgress;
 
     public TxVideoPlayerController(Context context) {
         super(context);
@@ -91,6 +92,8 @@ public class TxVideoPlayerController
 
     private void init() {
         LayoutInflater.from(mContext).inflate(R.layout.tx_video_palyer_controller, this, true);
+
+        mPbProgress = findViewById(R.id.pb_progress);
 
         mCenterStart = (ImageView) findViewById(R.id.center_start);
         mImage = (ImageView) findViewById(R.id.image);
@@ -296,6 +299,7 @@ public class TxVideoPlayerController
                 mBack.setVisibility(View.VISIBLE);
                 mClarity.setVisibility(View.GONE);
                 break;
+                default:
         }
     }
 
@@ -340,6 +344,10 @@ public class TxVideoPlayerController
         mSeek.setProgress(0);
         mSeek.setSecondaryProgress(0);
 
+        mPbProgress.setProgress(0);
+        mPbProgress.setSecondaryProgress(0);
+        mPbProgress.setVisibility(GONE);
+
         mCenterStart.setVisibility(View.VISIBLE);
         mImage.setVisibility(View.VISIBLE);
 
@@ -347,6 +355,7 @@ public class TxVideoPlayerController
         mFullScreen.setImageResource(R.drawable.ic_player_enlarge);
 
         mLength.setVisibility(View.VISIBLE);
+
 
         mTop.setVisibility(View.VISIBLE);
         mBack.setVisibility(View.GONE);
@@ -429,6 +438,7 @@ public class TxVideoPlayerController
         mTop.setVisibility(visible ? View.VISIBLE : View.GONE);
         mBottom.setVisibility(visible ? View.VISIBLE : View.GONE);
         topBottomVisible = visible;
+        mPbProgress.setVisibility(!visible ? View.VISIBLE : View.GONE);
         if (visible) {
             if (!mNiceVideoPlayer.isPaused() && !mNiceVideoPlayer.isBufferingPaused()) {
                 startDismissTopBottomTimer();
@@ -494,8 +504,10 @@ public class TxVideoPlayerController
         long duration = mNiceVideoPlayer.getDuration();
         int bufferPercentage = mNiceVideoPlayer.getBufferPercentage();
         mSeek.setSecondaryProgress(bufferPercentage);
+        mPbProgress.setSecondaryProgress(bufferPercentage);
         int progress = (int) (100f * position / duration);
         mSeek.setProgress(progress);
+        mPbProgress.setProgress(progress);
         mPosition.setText(NiceUtil.formatTime(position));
         mDuration.setText(NiceUtil.formatTime(duration));
         // 更新时间
@@ -509,6 +521,7 @@ public class TxVideoPlayerController
         mChangePositionCurrent.setText(NiceUtil.formatTime(newPosition));
         mChangePositionProgress.setProgress(newPositionProgress);
         mSeek.setProgress(newPositionProgress);
+        mPbProgress.setProgress(newPositionProgress);
         mPosition.setText(NiceUtil.formatTime(newPosition));
     }
 

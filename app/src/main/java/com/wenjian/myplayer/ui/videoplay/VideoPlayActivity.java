@@ -39,7 +39,6 @@ import butterknife.OnClick;
 public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, VideoPlayContract.Presenter>
         implements VideoPlayContract.View {
 
-
     @BindView(R.id.video_player)
     NiceVideoPlayer mVideoPlayer;
     @BindView(R.id.tv_video_name)

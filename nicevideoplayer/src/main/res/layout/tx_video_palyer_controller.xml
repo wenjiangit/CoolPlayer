@@ -2,6 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+    <ProgressBar
+        android:id="@+id/pb_progress"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:progressDrawable="@drawable/seek_progress"
+        android:layout_height="2dp" />
+
     <!--底图-->
     <ImageView
         android:id="@+id/image"

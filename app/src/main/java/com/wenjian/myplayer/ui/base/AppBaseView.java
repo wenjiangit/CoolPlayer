@@ -1,7 +1,5 @@
 package com.wenjian.myplayer.ui.base;
 
-import android.support.annotation.StringRes;
-
 import com.wenjian.core.mvp.base.MvpView;
 import com.wenjian.myplayer.ui.UiDelegate;
 

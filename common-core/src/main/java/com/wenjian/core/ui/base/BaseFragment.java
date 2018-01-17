@@ -2,6 +2,7 @@ package com.wenjian.core.ui.base;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -117,6 +118,7 @@ public abstract class BaseFragment extends Fragment {
      *
      * @param rootView 自己定义的布局
      */
+    @CallSuper
     protected void initWidget(View rootView) {
         mUnbinder = ButterKnife.bind(this, rootView);
     }

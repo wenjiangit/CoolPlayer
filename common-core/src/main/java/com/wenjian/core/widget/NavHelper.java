@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.SparseArray;
+import android.view.ViewGroup;
 
 /**
  * 底部导航菜单辅助工具类
@@ -36,6 +37,7 @@ public class NavHelper<T> {
 
     /**
      * 处理菜单点击事件
+     *
      * @param itemId 选中的菜单id
      * @return 是否能够处理这次事件
      */
@@ -67,6 +69,7 @@ public class NavHelper<T> {
 
     /**
      * 真正处理Fragment的切换
+     *
      * @param newTab 新的Tab
      * @param oldTab 旧的Tab
      */
@@ -75,11 +78,14 @@ public class NavHelper<T> {
         if (oldTab != null) {
             if (oldTab.fragment != null) {
                 transaction.detach(oldTab.fragment);
+                setUserVisible(oldTab.fragment, false);
             }
         }
 
         if (newTab.fragment != null) {
             transaction.attach(newTab.fragment);
+            setUserVisible(newTab.fragment, true);
+
         } else {
             Fragment fragment = Fragment.instantiate(mContext, newTab.clazz.getName(), null);
             transaction.add(mContainerId, fragment);
@@ -91,7 +97,20 @@ public class NavHelper<T> {
     }
 
     /**
+     * 解决可能出现的fragment重叠的bug,依据{@link android.support.v4.app.FragmentPagerAdapter#instantiateItem(ViewGroup, int)}
+     *
+     * @param fragment 当前fragment
+     * @param visible  可见性
+     */
+    private void setUserVisible(Fragment fragment, boolean visible) {
+        fragment.setUserVisibleHint(visible);
+        fragment.setMenuVisibility(visible);
+    }
+
+
+    /**
      * 回调菜单变化结果
+     *
      * @param newTab 选中的Tab
      * @param oldTab 之前的Tab
      */
@@ -103,6 +122,7 @@ public class NavHelper<T> {
 
     /**
      * 重复点击同一个Tab
+     *
      * @param tab Tab
      */
     private void doTabReselected(Tab<T> tab) {
@@ -111,6 +131,7 @@ public class NavHelper<T> {
 
     /**
      * 菜单变化监听回调接口
+     *
      * @param <T>
      */
     public interface OnNavMenuChangedListener<T> {

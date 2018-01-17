@@ -1,6 +1,7 @@
 package com.wenjian.core.ui.base;
 
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -73,6 +74,7 @@ public abstract class BaseActivity extends AppCompatActivity{
     /**
      * 初始化控件
      */
+    @CallSuper
     protected void initWidget() {
         mUnbinder = ButterKnife.bind(this);
     }
