@@ -184,7 +184,7 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
     @Override
     public void onLoadSuccess(VideoInfo info) {
         if (mVideoPlayer.isPlaying()) {
-            mController.reset2Start();
+            mVideoPlayer.releasePlayer();
         }
         mController.setClarity(info.getClarity(), 0);
         mController.autoplay();
