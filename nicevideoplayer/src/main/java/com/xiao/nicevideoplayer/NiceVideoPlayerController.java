@@ -2,6 +2,7 @@ package com.xiao.nicevideoplayer;
 
 import android.content.Context;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -10,6 +11,11 @@ import android.widget.ImageView;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by XiaoJianjun on 2017/6/21.
@@ -21,8 +27,8 @@ public abstract class NiceVideoPlayerController
     private Context mContext;
     protected INiceVideoPlayer mNiceVideoPlayer;
 
-    private Timer mUpdateProgressTimer;
-    private TimerTask mUpdateProgressTimerTask;
+    private ScheduledExecutorService mUpdateProgressService;
+    private Runnable mUpdateProgressTimerTask;
 
     private float mDownX;
     private float mDownY;
@@ -121,11 +127,12 @@ public abstract class NiceVideoPlayerController
      */
     protected void startUpdateProgressTimer() {
         cancelUpdateProgressTimer();
-        if (mUpdateProgressTimer == null) {
-            mUpdateProgressTimer = new Timer();
+        if (mUpdateProgressService == null) {
+            mUpdateProgressService =  new ScheduledThreadPoolExecutor(1,
+                    BaseThreadFactory.builder().daemon(true).namePattern("schedule-pool-%d").build());
         }
         if (mUpdateProgressTimerTask == null) {
-            mUpdateProgressTimerTask = new TimerTask() {
+            mUpdateProgressTimerTask = new Runnable() {
                 @Override
                 public void run() {
                     NiceVideoPlayerController.this.post(new Runnable() {
@@ -137,19 +144,18 @@ public abstract class NiceVideoPlayerController
                 }
             };
         }
-        mUpdateProgressTimer.schedule(mUpdateProgressTimerTask, 0, 1000);
+        mUpdateProgressService.scheduleAtFixedRate(mUpdateProgressTimerTask, 0, 1000, TimeUnit.MILLISECONDS);
     }
 
     /**
      * 取消更新进度的计时器。
      */
     protected void cancelUpdateProgressTimer() {
-        if (mUpdateProgressTimer != null) {
-            mUpdateProgressTimer.cancel();
-            mUpdateProgressTimer = null;
+        if (mUpdateProgressService != null) {
+            mUpdateProgressService.shutdown();
+            mUpdateProgressService = null;
         }
         if (mUpdateProgressTimerTask != null) {
-            mUpdateProgressTimerTask.cancel();
             mUpdateProgressTimerTask = null;
         }
     }
@@ -306,4 +312,5 @@ public abstract class NiceVideoPlayerController
      * 在手势ACTION_UP或ACTION_CANCEL时调用。
      */
     protected abstract void hideChangeBrightness();
+
 }

@@ -6,16 +6,20 @@ package com.xiao.nicevideoplayer;
  */
 public class NiceVideoPlayerManager {
 
-    private NiceVideoPlayer mVideoPlayer;
+    private volatile NiceVideoPlayer mVideoPlayer;
 
     private NiceVideoPlayerManager() {
     }
 
     private static NiceVideoPlayerManager sInstance;
 
-    public static synchronized NiceVideoPlayerManager instance() {
+    public static NiceVideoPlayerManager instance() {
         if (sInstance == null) {
-            sInstance = new NiceVideoPlayerManager();
+            synchronized (NiceVideoPlayerManager.class) {
+                if (sInstance == null) {
+                    sInstance = new NiceVideoPlayerManager();
+                }
+            }
         }
         return sInstance;
     }

@@ -34,6 +34,11 @@ public interface INiceVideoPlayer {
     void restart();
 
     /**
+     *  重置播放器状态
+     */
+    void reset();
+
+    /**
      * 暂停播放
      */
     void pause();

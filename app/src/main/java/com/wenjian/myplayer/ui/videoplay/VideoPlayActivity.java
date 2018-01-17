@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wenjian.myplayer.R;
 import com.wenjian.myplayer.data.network.model.Comment;
 import com.wenjian.myplayer.data.network.model.VideoDetail;
@@ -21,11 +22,11 @@ import com.wenjian.myplayer.ui.base.AppBaseActivity;
 import com.wenjian.myplayer.ui.home.HomeRecyclerAdapter;
 import com.wenjian.myplayer.ui.web.WebActivity;
 import com.xiao.nicevideoplayer.NiceVideoPlayer;
-import com.xiao.nicevideoplayer.NiceVideoPlayerController;
 import com.xiao.nicevideoplayer.NiceVideoPlayerManager;
 import com.xiao.nicevideoplayer.TxVideoPlayerController;
 
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -50,6 +51,8 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
     @BindView(R.id.comment_recycler)
     RecyclerView mCommentRecycler;
 
+    private boolean isLoadMore = false;
+
     RecyclerView mGuessRecycler;
 
     private VideoDetail mVideoDetail;
@@ -57,8 +60,9 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
     private static final String EXTRA_VIDEO_SRC = "video_src";
     private HomeRecyclerAdapter mAdapter;
     private CommentRecyclerAdapter mCommentAdapter;
-    private NiceVideoPlayerController mController;
+    private TxVideoPlayerController mController;
     private TextView mTvVideoDesc;
+    private TextView mTvCommentCount;
 
     public static void start(Context context, VideoDetail detail) {
         Intent starter = new Intent(context, VideoPlayActivity.class);
@@ -76,7 +80,7 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
     protected void initWindows() {
         super.initWindows();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.black_alpha_50));
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.black_alpha_50));
         }
     }
 
@@ -94,12 +98,20 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
                 mCommentRecycler, false);
         mTvVideoDesc = header.findViewById(R.id.tv_video_desc);
         mGuessRecycler = header.findViewById(R.id.guess_recycler);
+        mTvCommentCount = header.findViewById(R.id.tv_comment_count);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mGuessRecycler.setLayoutManager(linearLayoutManager);
         mAdapter = new HomeRecyclerAdapter();
         mGuessRecycler.setAdapter(mAdapter);
 
         mCommentAdapter.addHeaderView(header);
+        mCommentAdapter.setEnableLoadMore(true);
+        mCommentAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                getPresenter().getCommentList(mVideoDetail.getDataId(), isLoadMore = true);
+            }
+        }, mCommentRecycler);
 
     }
 
@@ -111,7 +123,7 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
 
     private void loadData() {
         getPresenter().loadVideoInfo(mVideoDetail.getLoadURL());
-        getPresenter().getCommentList(mVideoDetail.getDataId());
+        getPresenter().getCommentList(mVideoDetail.getDataId(), isLoadMore = false);
     }
 
     private void setupVideoPlayer() {
@@ -172,7 +184,11 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
 
     @Override
     public void onLoadSuccess(VideoInfo info) {
+        if (mVideoPlayer.isPlaying()) {
+            mController.reset2Start();
+        }
         mVideoPlayer.setUp(info.getVideoSrc(), null);
+        mController.autoplay();
         mTvVideoName.setText(info.getTitle());
         mAdapter.setNewData(info.getList());
         updateController(info.getTitle(), info.getDuration(), info.getPic());
@@ -185,9 +201,22 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
 
     @Override
     public void onCommentLoaded(List<Comment> comments) {
-        mCommentAdapter.setNewData(comments);
+        if (isLoadMore) {
+            mCommentAdapter.addData(comments);
+        } else {
+            mCommentAdapter.setNewData(comments);
+        }
     }
 
+    @Override
+    public void setLoadMoreEnd() {
+        mCommentAdapter.loadMoreEnd();
+    }
+
+    @Override
+    public void setCommentCount(int count) {
+        mTvCommentCount.setText(String.format(Locale.getDefault(),"%d 条", count));
+    }
 
     @Override
     protected void onNewIntent(Intent intent) {

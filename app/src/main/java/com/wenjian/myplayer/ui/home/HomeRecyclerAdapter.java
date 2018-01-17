@@ -48,7 +48,7 @@ public class HomeRecyclerAdapter extends BaseMultiItemQuickAdapter<ShowDetail, B
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, ShowDetail item) {
+    protected void convert(BaseViewHolder helper, final ShowDetail item) {
         switch (helper.getItemViewType()) {
             case ShowDetail.TYPE_BANNER:
                 mBanner = helper.getView(R.id.banner);
@@ -61,7 +61,7 @@ public class HomeRecyclerAdapter extends BaseMultiItemQuickAdapter<ShowDetail, B
                 mBanner.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
                     @Override
                     public void onPageClick(View view, int i) {
-                        Logger.d("banner", "点击:%d", i);
+                        VideoPlayActivity.start(mContext,item.getChildList().get(i));
                     }
                 });
                 mBanner.start();

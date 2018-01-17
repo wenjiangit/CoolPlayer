@@ -124,6 +124,7 @@ public class NiceVideoPlayer extends FrameLayout
         this.addView(mContainer, params);
     }
 
+    @Override
     public void setUp(String url, Map<String, String> headers) {
         mUrl = url;
         mHeaders = headers;
@@ -205,6 +206,12 @@ public class NiceVideoPlayer extends FrameLayout
         } else {
             LogUtil.d("NiceVideoPlayer在mCurrentState == " + mCurrentState + "时不能调用restart()方法.");
         }
+    }
+
+    @Override
+    public void reset() {
+        mMediaPlayer.reset();
+        openMediaPlayer();
     }
 
     @Override

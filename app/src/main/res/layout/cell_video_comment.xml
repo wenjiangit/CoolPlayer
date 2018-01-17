@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/dp_4"
-    android:elevation="0dp"
-    android:translationX="0dp"
+    android:elevation="2dp"
+    android:translationY="0dp"
     android:outlineProvider="none"
     app:cardUseCompatPadding="true"
     tools:targetApi="lollipop">
@@ -19,8 +19,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/cv_pic"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             app:civ_border_color="@color/colorAccent"
             app:civ_border_width="1dp" />
 

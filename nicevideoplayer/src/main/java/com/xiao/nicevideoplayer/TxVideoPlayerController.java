@@ -172,6 +172,14 @@ public class TxVideoPlayerController
         }
     }
 
+    public void autoplay() {
+        mCenterStart.performClick();
+    }
+
+    public void reset2Start() {
+        mNiceVideoPlayer.reset();
+    }
+
     /**
      * 设置清晰度
      *
@@ -250,6 +258,8 @@ public class TxVideoPlayerController
                 setTopBottomVisible(false);
                 mImage.setVisibility(View.VISIBLE);
                 mCompleted.setVisibility(View.VISIBLE);
+                break;
+            default:
                 break;
         }
     }

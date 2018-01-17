@@ -41,6 +41,19 @@ public class VideoPlayContract {
          */
         void onCommentLoaded(List<Comment> comments);
 
+
+        /**
+         * 没有更多了
+         */
+        void setLoadMoreEnd();
+
+
+        /**
+         * 设置评论个数
+         * @param count 条数
+         */
+        void setCommentCount(int count);
+
     }
 
     public interface Presenter extends MvpPresenter<View> {
@@ -56,9 +69,11 @@ public class VideoPlayContract {
         /**
          * 拉取评论
          *
-         * @param mediaId id
+         * @param mediaId    id
+         * @param isLoadMore 是否是加载更多
          */
-        void getCommentList(String mediaId);
+        void getCommentList(String mediaId, boolean isLoadMore);
+
 
     }
 

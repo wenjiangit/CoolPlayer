@@ -2,13 +2,18 @@ package com.wenjian.myplayer.ui.home;
 
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wenjian.myplayer.R;
 import com.wenjian.myplayer.data.network.model.ShowDetail;
 import com.wenjian.myplayer.ui.base.AppBaseFragment;
@@ -16,7 +21,9 @@ import com.wenjian.myplayer.ui.base.AppBaseFragment;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * Description: HomeFragment
@@ -34,6 +41,8 @@ public class HomeFragment extends AppBaseFragment<HomeContract.View, HomeContrac
     AppBarLayout mAppBarLayout;
     @BindView(R.id.tv_search)
     TextView mTvSearch;
+    @BindView(R.id.swipe_refresh)
+    SwipeRefreshLayout mSwipeRefresh;
 
 
     private HomeRecyclerAdapter mAdapter;
@@ -56,6 +65,18 @@ public class HomeFragment extends AppBaseFragment<HomeContract.View, HomeContrac
     protected void initWidget(View rootView) {
         super.initWidget(rootView);
         setupRecycler();
+        setupSwipeRefreshLayout();
+    }
+
+    private void setupSwipeRefreshLayout() {
+        mSwipeRefresh.setColorSchemeColors(Color.RED,Color.GREEN,Color.BLUE);
+        mSwipeRefresh.setProgressViewOffset(true,0,200);
+        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getPresenter().start();
+            }
+        });
     }
 
 
@@ -85,9 +106,11 @@ public class HomeFragment extends AppBaseFragment<HomeContract.View, HomeContrac
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mHomeRecycler.setLayoutManager(layoutManager);
         mAdapter = new HomeRecyclerAdapter();
+        mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mHomeRecycler.setAdapter(mAdapter);
         mHomeRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private float y;
+
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -122,7 +145,18 @@ public class HomeFragment extends AppBaseFragment<HomeContract.View, HomeContrac
     }
 
     @Override
+    public void showLoading() {
+        mSwipeRefresh.setRefreshing(true);
+    }
+
+    @Override
+    public void hideLoading() {
+        mSwipeRefresh.setRefreshing(false);
+    }
+
+    @Override
     public void onLoadSuccess(List<ShowDetail> list) {
         mAdapter.setNewData(list);
     }
+
 }

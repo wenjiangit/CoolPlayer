@@ -6,13 +6,20 @@
     android:layout_height="match_parent"
     tools:context="com.wenjian.myplayer.ui.main.MainActivity">
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/home_recycler"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/home_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -30,7 +37,7 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="75dp"
                 android:paddingTop="25dp">
 
                 <TextView

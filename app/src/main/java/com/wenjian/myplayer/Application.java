@@ -1,8 +1,11 @@
 package com.wenjian.myplayer;
 
+import android.content.Context;
+
 import com.androidnetworking.AndroidNetworking;
 import com.wenjian.core.utils.Utils;
 import com.wenjian.myplayer.data.AppDataManager;
+import com.wenjian.myplayer.utils.OkhttpUtils;
 
 /**
  * Description: Application
@@ -13,14 +16,26 @@ import com.wenjian.myplayer.data.AppDataManager;
 
 public class Application extends android.app.Application {
 
+
+    public static Context sContext;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        sContext = this;
         //初始化数据层
         AppDataManager.init(this);
         //初始化工具层
         Utils.init(this);
         //初始化网络模块
-        AndroidNetworking.initialize(this);
+        AndroidNetworking.initialize(this, OkhttpUtils.getDefault());
+
     }
+
+
+    public static Context getContext() {
+        return sContext;
+    }
+
+
 }
