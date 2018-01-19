@@ -12,8 +12,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:paddingBottom="6dp"
-        android:paddingTop="6dp">
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        >
 
         <View
             android:layout_width="4dp"
@@ -32,6 +33,19 @@
             android:textColor="@color/textDark"
             android:textSize="14sp"
             />
+
+        <TextView
+            android:id="@+id/tv_more"
+            android:text="@string/label_more"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:textColor="@color/textSecond"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
 
 
     </RelativeLayout>

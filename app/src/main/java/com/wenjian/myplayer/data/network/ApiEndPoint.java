@@ -15,4 +15,10 @@ public interface ApiEndPoint {
 
 
     String VIDEO_COMMENT = BuildConfig.BASE_URL + "Commentary/getCommentList.do";
+
+
+    String VIDEO_LIST= BuildConfig.BASE_URL + "columns/getVideoList.do";
+
+
+
 }

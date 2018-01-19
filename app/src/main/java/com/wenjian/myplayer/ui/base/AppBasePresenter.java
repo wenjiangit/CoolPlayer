@@ -1,6 +1,7 @@
 package com.wenjian.myplayer.ui.base;
 
 import com.wenjian.core.mvp.base.BaseMvpPresenter;
+import com.wenjian.core.utils.Logger;
 import com.wenjian.myplayer.R;
 import com.wenjian.myplayer.data.AppDataManager;
 import com.wenjian.myplayer.data.DataManager;
@@ -31,6 +32,7 @@ public class AppBasePresenter<V extends AppBaseView> extends BaseMvpPresenter<V>
         @Override
         public void accept(Throwable throwable) throws Exception {
             getView().hideLoading();
+            Logger.e(TAG,"throwable : %s",throwable.getMessage());
             getView().onError(R.string.network_error);
         }
     };

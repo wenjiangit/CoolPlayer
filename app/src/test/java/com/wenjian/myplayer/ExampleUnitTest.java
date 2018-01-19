@@ -1,6 +1,10 @@
 package com.wenjian.myplayer;
 
+import android.net.Uri;
+
 import org.junit.Test;
+
+import java.net.URI;
 
 import static org.junit.Assert.*;
 
@@ -28,4 +32,16 @@ public class ExampleUnitTest {
             System.out.println(String.format("%d%% | %s", percent, hex));
         }
     }
+
+
+    @Test
+    public void uri_test() throws Exception {
+        String url = "http://www.baidu.com?catalogId=dadadfhalfjadajd";
+
+        String query = URI.create(url).getQuery();
+
+        System.out.println(query);
+    }
+
+
 }

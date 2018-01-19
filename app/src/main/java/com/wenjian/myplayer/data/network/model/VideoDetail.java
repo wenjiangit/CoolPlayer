@@ -39,7 +39,7 @@ public class VideoDetail implements Parcelable {
     @Expose
     private String loadType;
     @Expose
-    private int score;
+    private float score;
     @Expose
     private String angleIcon;
     @Expose
@@ -82,7 +82,7 @@ public class VideoDetail implements Parcelable {
         this.loadType = loadType;
     }
 
-    public int getScore() {
+    public float getScore() {
         return score;
     }
 
@@ -186,7 +186,7 @@ public class VideoDetail implements Parcelable {
         dest.writeInt(this.airTime);
         dest.writeString(this.duration);
         dest.writeString(this.loadType);
-        dest.writeInt(this.score);
+        dest.writeFloat(this.score);
         dest.writeString(this.angleIcon);
         dest.writeString(this.dataId);
         dest.writeString(this.description);

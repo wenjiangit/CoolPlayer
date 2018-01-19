@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -20,6 +21,8 @@ import com.wenjian.core.utils.UiUtils;
 import com.wenjian.myplayer.R;
 import com.wenjian.myplayer.data.network.model.ShowDetail;
 import com.wenjian.myplayer.data.network.model.VideoDetail;
+import com.wenjian.myplayer.ui.classify.VideoListActivity;
+import com.wenjian.myplayer.ui.classify.VideoListContract;
 import com.wenjian.myplayer.ui.videoplay.VideoPlayActivity;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
@@ -69,6 +72,14 @@ public class HomeRecyclerAdapter extends BaseMultiItemQuickAdapter<ShowDetail, B
 
             case ShowDetail.TYPE_NORMAL:
                 helper.setText(R.id.tv_title, item.getTitle());
+                helper.setVisible(R.id.tv_more, !TextUtils.isEmpty(item.getMoreURL()));
+                helper.getView(R.id.tv_more)
+                        .setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                VideoListActivity.start(mContext, item.getCatagoryId(), item.getTitle());
+                            }
+                        });
 
                 RecyclerView recycler = helper.getView(R.id.item_recycler);
                 GridLayoutManager layoutManager = new GridLayoutManager(mContext, getSpanCount(item));

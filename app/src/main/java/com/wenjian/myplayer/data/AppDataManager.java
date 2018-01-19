@@ -62,5 +62,10 @@ public class AppDataManager implements DataManager {
         return mApiHelper.doCommentListApiCall(mediaId,pnum);
     }
 
+    @Override
+    public Single<HttpResponse> doVideoListApiCall(String catalogId, String pnum) {
+        return mApiHelper.doVideoListApiCall(catalogId, pnum);
+    }
+
 
 }

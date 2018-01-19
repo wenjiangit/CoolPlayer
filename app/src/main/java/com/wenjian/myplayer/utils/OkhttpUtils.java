@@ -58,27 +58,29 @@ public class OkhttpUtils {
                             .cacheControl(CacheControl.FORCE_CACHE)
                             .build();
 
-                } else {
-                    //有网强制走网络
-                    request.newBuilder()
-                            .cacheControl(CacheControl.FORCE_NETWORK)
-                            .build();
                 }
-                Response response = chain.proceed(request);
-                //有网不缓存,最大保存时长为0
-                if (NetworkUtils.isNetworkAvailable()) {
-                    response.newBuilder()
-                            .header("Cache-Control", "public, max-age=" + 0)
-                            .removeHeader("Pragma")
-                            .build();
-                } else {
-                    //没网进行,保存时间为4周
-                    response.newBuilder()
-                            .header("Cache-Control", "public, only-if-cached, max-stale=" + MAX_STALE)
-                            .removeHeader("Pragma")
-                            .build();
 
+                Response response = null;
+                try {
+                    response = chain.proceed(request);
+                    //有网不缓存,最大保存时长为0
+                    if (NetworkUtils.isNetworkAvailable()) {
+                        response.newBuilder()
+                                .header("Cache-Control", "public, max-age=" + 0)
+                                .removeHeader("Pragma")
+                                .build();
+                    } else {
+                        //没网进行,保存时间为4周
+                        response.newBuilder()
+                                .header("Cache-Control", "public, only-if-cached, max-stale=" + MAX_STALE)
+                                .removeHeader("Pragma")
+                                .build();
+
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+
                 return response;
             }
         };

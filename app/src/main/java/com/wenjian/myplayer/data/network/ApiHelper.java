@@ -40,4 +40,14 @@ public interface ApiHelper {
      */
     Single<HttpResponse> doCommentListApiCall(String mediaId, String pnum);
 
+
+    /**
+     * 获取影片列表
+     *
+     * @param catagoryId 分类id
+     * @param pnum       页数
+     * @return
+     */
+    Single<HttpResponse> doVideoListApiCall(String catagoryId, String pnum);
+
 }

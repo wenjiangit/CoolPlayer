@@ -1,6 +1,7 @@
 package com.wenjian.myplayer;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -22,5 +23,12 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         assertEquals("com.wenjian.myplayer", appContext.getPackageName());
+    }
+
+    @Test
+    public void uri_test() throws Exception {
+        String url = "http://www.baidu.com?catalogId=dadadfhalfjadajd";
+        String catalogId = Uri.parse(url).getQueryParameter("catalogId");
+        System.out.println(catalogId);
     }
 }

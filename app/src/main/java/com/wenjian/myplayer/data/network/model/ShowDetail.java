@@ -1,5 +1,8 @@
 package com.wenjian.myplayer.data.network.model;
 
+import android.net.Uri;
+import android.text.TextUtils;
+
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.google.gson.annotations.Expose;
 
@@ -147,6 +150,18 @@ public class ShowDetail implements MultiItemEntity {
                 ", title='" + title + '\'' +
                 ", bigPicShowFlag='" + bigPicShowFlag + '\'' +
                 '}';
+    }
+
+    /**
+     * 获取分类列表id
+     *
+     * @return catalogId
+     */
+    public String getCatagoryId() {
+        if (TextUtils.isEmpty(moreURL)) {
+            return null;
+        }
+        return Uri.parse(moreURL).getQueryParameter("catalogId");
     }
 
     @Override

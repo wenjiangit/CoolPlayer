@@ -28,7 +28,9 @@ public class Application extends android.app.Application {
         //初始化工具层
         Utils.init(this);
         //初始化网络模块
-        AndroidNetworking.initialize(this, OkhttpUtils.getDefault());
+        AndroidNetworking.initialize(this);
+
+        AndroidNetworking.enableLogging();
 
     }
 

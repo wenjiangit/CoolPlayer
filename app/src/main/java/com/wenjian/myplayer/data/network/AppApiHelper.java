@@ -36,10 +36,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<HttpResponse> doVideoInfoApiCall(String url) {
-        return Rx2AndroidNetworking
-                .get(url)
-                .build()
-                .getObjectSingle(HttpResponse.class);
+        return doSimpleGetAction(url);
     }
 
     @Override
@@ -48,6 +45,24 @@ public class AppApiHelper implements ApiHelper {
                 .get(ApiEndPoint.VIDEO_COMMENT)
                 .addQueryParameter("mediaId", mediaId)
                 .addQueryParameter("pnum", pnum)
+                .build()
+                .getObjectSingle(HttpResponse.class);
+    }
+
+    @Override
+    public Single<HttpResponse> doVideoListApiCall(String catalogId, String pnum) {
+        return Rx2AndroidNetworking
+                .get(ApiEndPoint.VIDEO_LIST)
+                .addQueryParameter("catalogId",catalogId)
+                .addQueryParameter("pnum",pnum)
+                .build()
+                .getObjectSingle(HttpResponse.class);
+    }
+
+
+    private Single<HttpResponse> doSimpleGetAction(String url) {
+        return Rx2AndroidNetworking
+                .get(url)
                 .build()
                 .getObjectSingle(HttpResponse.class);
     }
