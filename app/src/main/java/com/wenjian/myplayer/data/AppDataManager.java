@@ -7,6 +7,8 @@ import com.wenjian.myplayer.data.db.DbHelper;
 import com.wenjian.myplayer.data.network.ApiHelper;
 import com.wenjian.myplayer.data.network.AppApiHelper;
 import com.wenjian.myplayer.data.network.model.HttpResponse;
+import com.wenjian.myplayer.data.network.model.ShowDetail;
+import com.wenjian.myplayer.data.network.model.VideoDetail;
 import com.wenjian.myplayer.data.prefs.AppPrefsHelper;
 import com.wenjian.myplayer.data.prefs.PrefsHelper;
 
@@ -28,12 +30,22 @@ public class AppDataManager implements DataManager {
 
     private AppDataManager() {
         mApiHelper = AppApiHelper.create();
-        mDbHelper = AppDbHelper.create();
+        mDbHelper = AppDbHelper.getInstance();
         mPrefsHelper = AppPrefsHelper.create();
     }
 
     public static void init(Context context) {
         sApplication = context.getApplicationContext();
+    }
+
+    @Override
+    public void saveVideos(VideoDetail... videoDetails) {
+        mDbHelper.saveVideos(videoDetails);
+    }
+
+    @Override
+    public void saveShowDetail(ShowDetail... showDetails) {
+        mDbHelper.saveShowDetail(showDetails);
     }
 
     private static class Holder {
@@ -65,6 +77,11 @@ public class AppDataManager implements DataManager {
     @Override
     public Single<HttpResponse> doVideoListApiCall(String catalogId, String pnum) {
         return mApiHelper.doVideoListApiCall(catalogId, pnum);
+    }
+
+    @Override
+    public Single<HttpResponse> doSimpleGetAction(String url) {
+        return mApiHelper.doSimpleGetAction(url);
     }
 
 

@@ -5,7 +5,7 @@ import android.content.Context;
 import com.androidnetworking.AndroidNetworking;
 import com.wenjian.core.utils.Utils;
 import com.wenjian.myplayer.data.AppDataManager;
-import com.wenjian.myplayer.utils.OkhttpUtils;
+import com.wenjian.myplayer.data.db.AppDbHelper;
 
 /**
  * Description: Application
@@ -31,6 +31,8 @@ public class Application extends android.app.Application {
         AndroidNetworking.initialize(this);
 
         AndroidNetworking.enableLogging();
+
+        AppDbHelper.getInstance().init(this);
 
     }
 

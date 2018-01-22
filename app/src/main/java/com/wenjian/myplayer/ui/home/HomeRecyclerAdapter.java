@@ -8,21 +8,16 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.wenjian.core.utils.Logger;
-import com.wenjian.core.utils.UiUtils;
 import com.wenjian.myplayer.R;
 import com.wenjian.myplayer.data.network.model.ShowDetail;
 import com.wenjian.myplayer.data.network.model.VideoDetail;
 import com.wenjian.myplayer.ui.classify.VideoListActivity;
-import com.wenjian.myplayer.ui.classify.VideoListContract;
 import com.wenjian.myplayer.ui.videoplay.VideoPlayActivity;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
@@ -64,7 +59,7 @@ public class HomeRecyclerAdapter extends BaseMultiItemQuickAdapter<ShowDetail, B
                 mBanner.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
                     @Override
                     public void onPageClick(View view, int i) {
-                        VideoPlayActivity.start(mContext,item.getChildList().get(i));
+                        VideoPlayActivity.start(mContext, item.getChildList().get(i));
                     }
                 });
                 mBanner.start();
@@ -77,10 +72,9 @@ public class HomeRecyclerAdapter extends BaseMultiItemQuickAdapter<ShowDetail, B
                         .setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                VideoListActivity.start(mContext, item.getCatagoryId(), item.getTitle());
+                                VideoListActivity.start(mContext, item.getCatalogId(), item.getTitle());
                             }
                         });
-
                 RecyclerView recycler = helper.getView(R.id.item_recycler);
                 GridLayoutManager layoutManager = new GridLayoutManager(mContext, getSpanCount(item));
                 recycler.setLayoutManager(layoutManager);
@@ -96,6 +90,7 @@ public class HomeRecyclerAdapter extends BaseMultiItemQuickAdapter<ShowDetail, B
                         return 1;
                     }
                 });
+
                 break;
             default:
                 helper.itemView.setVisibility(View.GONE);
@@ -132,6 +127,25 @@ public class HomeRecyclerAdapter extends BaseMultiItemQuickAdapter<ShowDetail, B
                     .load(videoDetail.getPic())
                     .placeholder(new ColorDrawable(Color.GRAY))
                     .into(mImageView);
+
+        }
+    }
+
+    private static class MovieInfoAdapter extends BaseQuickAdapter<VideoDetail, BaseViewHolder> {
+
+        public MovieInfoAdapter(@Nullable List<VideoDetail> data) {
+            super(R.layout.cell_movie_info, data);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, VideoDetail item) {
+            helper.setText(R.id.tv_title, item.getTitle());
+            helper.setText(R.id.tv_desc, item.getDescription());
+            helper.setText(R.id.tv_time, item.getDuration());
+            ImageView ivThumb = helper.getView(R.id.iv_thumb);
+            Glide.with(mContext)
+                    .load(item.getAngleIcon())
+                    .into(ivThumb);
 
         }
     }

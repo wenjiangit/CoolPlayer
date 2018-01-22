@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.SurfaceTexture;
+import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.util.AttributeSet;
@@ -351,10 +352,36 @@ public class NiceVideoPlayer extends FrameLayout
         return 0;
     }
 
+    private AudioManager.OnAudioFocusChangeListener mOnAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+        @Override
+        public void onAudioFocusChange(int focusChange) {
+            switch (focusChange) {
+                case AudioManager.AUDIOFOCUS_GAIN:
+                    break;
+                case AudioManager.AUDIOFOCUS_GAIN_TRANSIENT: {
+                    NiceVideoPlayer player = NiceVideoPlayerManager.instance().getCurrentNiceVideoPlayer();
+                    if (player != null && player.isPlaying()) {
+                        player.pause();
+                    }
+                    break;
+                }
+                case AudioManager.AUDIOFOCUS_LOSS: {
+                    NiceVideoPlayer player = NiceVideoPlayerManager.instance().getCurrentNiceVideoPlayer();
+                    if (player != null) {
+                        NiceVideoPlayerManager.instance().releaseNiceVideoPlayer();
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+    };
+
     private void initAudioManager() {
         if (mAudioManager == null) {
             mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
-            mAudioManager.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+            mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
         }
     }
 
@@ -367,11 +394,11 @@ public class NiceVideoPlayer extends FrameLayout
                 case TYPE_IJK:
                 default:
                     mMediaPlayer = new IjkMediaPlayer();
-                    ((IjkMediaPlayer)mMediaPlayer).setOption(1, "analyzemaxduration", 100L);
-                    ((IjkMediaPlayer)mMediaPlayer).setOption(1, "probesize", 10240L);
-                    ((IjkMediaPlayer)mMediaPlayer).setOption(1, "flush_packets", 1L);
-                    ((IjkMediaPlayer)mMediaPlayer).setOption(4, "packet-buffering", 0L);
-                    ((IjkMediaPlayer)mMediaPlayer).setOption(4, "framedrop", 1L);
+                    ((IjkMediaPlayer) mMediaPlayer).setOption(1, "analyzemaxduration", 100L);
+                    ((IjkMediaPlayer) mMediaPlayer).setOption(1, "probesize", 10240L);
+                    ((IjkMediaPlayer) mMediaPlayer).setOption(1, "flush_packets", 1L);
+                    ((IjkMediaPlayer) mMediaPlayer).setOption(4, "packet-buffering", 0L);
+                    ((IjkMediaPlayer) mMediaPlayer).setOption(4, "framedrop", 1L);
                     break;
             }
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -668,7 +695,7 @@ public class NiceVideoPlayer extends FrameLayout
     @Override
     public void releasePlayer() {
         if (mAudioManager != null) {
-            mAudioManager.abandonAudioFocus(null);
+            mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
             mAudioManager = null;
         }
         if (mMediaPlayer != null) {

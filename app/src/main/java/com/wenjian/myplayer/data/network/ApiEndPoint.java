@@ -17,8 +17,19 @@ public interface ApiEndPoint {
     String VIDEO_COMMENT = BuildConfig.BASE_URL + "Commentary/getCommentList.do";
 
 
-    String VIDEO_LIST= BuildConfig.BASE_URL + "columns/getVideoList.do";
+    String VIDEO_LIST = BuildConfig.BASE_URL + "columns/getVideoList.do";
 
+
+    String POPU_MSG = BuildConfig.BASE_URL + "popUpApi/popUpMsg.do";
+
+
+    String HOT_SEARCH = BuildConfig.BASE_URL + "hotSearchApi/hotSearch.do";
+
+
+    String FIND_MOVIE_PAGE = BuildConfig.BASE_URL + "find/findMoviePage.do";
+
+
+    String FIND_PAGE_INFO = BuildConfig.BASE_URL + "find/findPageInfoMsg.do";
 
 
 }

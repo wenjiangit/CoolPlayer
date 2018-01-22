@@ -5,13 +5,18 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Property;
+import org.greenrobot.greendao.annotation.Generated;
+
 /**
  * Description: VideoDetail
  * Date: 2018/1/9
  *
  * @author jian.wen@ubtrobot.com
  */
-
+@Entity(nameInDb = "video")
 public class VideoDetail implements Parcelable {
 
     /*
@@ -32,30 +37,45 @@ public class VideoDetail implements Parcelable {
                     }
     * */
 
+    @Property(nameInDb = "air_time")
     @Expose
     private int airTime;
+    @Property
     @Expose
     private String duration;
+    @Property(nameInDb = "load_type")
     @Expose
     private String loadType;
+    @Property
     @Expose
     private float score;
+    @Property(nameInDb = "angle_icon")
     @Expose
     private String angleIcon;
+    @Id
     @Expose
     private String dataId;
+    @Property
     @Expose
     private String description;
+    @Property(nameInDb = "load_url")
     @Expose
     private String loadURL;
+    @Property(nameInDb = "share_url")
     @Expose
     private String shareURL;
+    @Property
     @Expose
     private String pic;
+    @Property
     @Expose
     private String title;
+    @Property(nameInDb = "room_id")
     @Expose
     private String roomId;
+
+    @Property(nameInDb = "show_title")
+    private String showTitle;
 
 
     public int getAirTime() {
@@ -86,7 +106,7 @@ public class VideoDetail implements Parcelable {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(float score) {
         this.score = score;
     }
 
@@ -154,7 +174,13 @@ public class VideoDetail implements Parcelable {
         this.roomId = roomId;
     }
 
+    public String getShowTitle() {
+        return this.showTitle;
+    }
 
+    public void setShowTitle(String showTitle) {
+        this.showTitle = showTitle;
+    }
 
 
 
@@ -197,6 +223,10 @@ public class VideoDetail implements Parcelable {
         dest.writeString(this.roomId);
     }
 
+
+
+
+
     public VideoDetail() {
     }
 
@@ -213,6 +243,23 @@ public class VideoDetail implements Parcelable {
         this.pic = in.readString();
         this.title = in.readString();
         this.roomId = in.readString();
+    }
+
+    @Generated(hash = 114069867)
+    public VideoDetail(int airTime, String duration, String loadType, float score, String angleIcon, String dataId, String description, String loadURL, String shareURL, String pic, String title, String roomId, String showTitle) {
+        this.airTime = airTime;
+        this.duration = duration;
+        this.loadType = loadType;
+        this.score = score;
+        this.angleIcon = angleIcon;
+        this.dataId = dataId;
+        this.description = description;
+        this.loadURL = loadURL;
+        this.shareURL = shareURL;
+        this.pic = pic;
+        this.title = title;
+        this.roomId = roomId;
+        this.showTitle = showTitle;
     }
 
     public static final Parcelable.Creator<VideoDetail> CREATOR = new Parcelable.Creator<VideoDetail>() {

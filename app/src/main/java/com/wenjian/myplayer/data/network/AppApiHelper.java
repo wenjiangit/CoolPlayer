@@ -60,7 +60,8 @@ public class AppApiHelper implements ApiHelper {
     }
 
 
-    private Single<HttpResponse> doSimpleGetAction(String url) {
+    @Override
+    public Single<HttpResponse> doSimpleGetAction(String url) {
         return Rx2AndroidNetworking
                 .get(url)
                 .build()

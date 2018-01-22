@@ -50,4 +50,12 @@ public interface ApiHelper {
      */
     Single<HttpResponse> doVideoListApiCall(String catagoryId, String pnum);
 
+
+
+    Single<HttpResponse> doSimpleGetAction(String url);
+
+
+
+
+
 }
