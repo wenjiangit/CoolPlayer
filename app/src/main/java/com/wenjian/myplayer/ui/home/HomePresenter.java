@@ -51,7 +51,6 @@ public class HomePresenter extends AppBasePresenter<HomeContract.View>
                     @Override
                     public void accept(HttpResponse response) throws Exception {
                         Log.d(TAG, "doOnSuccess: " + Thread.currentThread().getName());
-                        saveDataToDb(response);
                     }
                 })
                 .observeOn(getSchedulerProvider().mainThread())
@@ -72,7 +71,7 @@ public class HomePresenter extends AppBasePresenter<HomeContract.View>
 
 
 
-    private void saveDataToDb(HttpResponse response) {
+   /* private void saveDataToDb(HttpResponse response) {
         if (response.isSuccess()) {
             HomeRsp result = response.getResult(HomeRsp.class);
             List<ShowDetail> list = result.getList();
@@ -86,5 +85,5 @@ public class HomePresenter extends AppBasePresenter<HomeContract.View>
                 }
             }
         }
-    }
+    }*/
 }

@@ -3,6 +3,7 @@ package com.wenjian.myplayer.data.network.model;
 import android.text.TextUtils;
 
 import com.google.gson.annotations.Expose;
+import com.wenjian.myplayer.data.db.model.Record;
 import com.xiao.nicevideoplayer.Clarity;
 
 import java.util.ArrayList;

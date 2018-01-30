@@ -50,7 +50,7 @@ ext {
     gsonVersion = '2.8.0'
     timberVersion = '4.5.1'
 
-    recyclerAdapterHelper = '2.9.28'
+    recyclerAdapterHelper = '2.9.30'
 
 
 

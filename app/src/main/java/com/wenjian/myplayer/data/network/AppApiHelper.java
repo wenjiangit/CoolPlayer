@@ -59,6 +59,14 @@ public class AppApiHelper implements ApiHelper {
                 .getObjectSingle(HttpResponse.class);
     }
 
+    @Override
+    public Single<HttpResponse> doVideoDetailApiCall(String mediaId) {
+        return Rx2AndroidNetworking.get(ApiEndPoint.VIDEO_DETAIL)
+                .addQueryParameter("mediaId",mediaId)
+                .build()
+                .getObjectSingle(HttpResponse.class);
+    }
+
 
     @Override
     public Single<HttpResponse> doSimpleGetAction(String url) {

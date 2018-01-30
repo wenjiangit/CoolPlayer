@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 26
@@ -22,11 +21,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-    greendao {
-        schemaVersion 1
-    }
 }
+
+def dbflow_version = "4.2.4"
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -47,10 +44,14 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjava2Version"
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:' + rootProject.recyclerAdapterHelper
+
+    implementation "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
+    annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
+
     implementation 'com.github.pinguo-zhouwei:MZBannerView:v2.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
-    implementation 'org.greenrobot:greendao:3.2.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'

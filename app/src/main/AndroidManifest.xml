@@ -31,7 +31,10 @@
         <activity android:name=".ui.splash.SplashActivity" />
         <activity
             android:name=".ui.classify.VideoListActivity"
-            android:theme="@style/AppTheme.TransStatusBar"></activity>
+            android:theme="@style/AppTheme.TransStatusBar"/>
+        <activity
+            android:name=".ui.record.RecordActivity"
+            android:theme="@style/AppTheme.TransStatusBar" />
     </application>
 
 </manifest>

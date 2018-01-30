@@ -1,6 +1,8 @@
 package com.wenjian.myplayer.ui.videoplay;
 
 import com.wenjian.core.mvp.base.MvpPresenter;
+import com.wenjian.myplayer.data.db.model.Collection;
+import com.wenjian.myplayer.data.db.model.Record;
 import com.wenjian.myplayer.data.network.model.Comment;
 import com.wenjian.myplayer.data.network.model.VideoInfo;
 import com.wenjian.myplayer.ui.base.AppBaseView;
@@ -50,6 +52,7 @@ public class VideoPlayContract {
 
         /**
          * 设置评论个数
+         *
          * @param count 条数
          */
         void setCommentCount(int count);
@@ -61,9 +64,9 @@ public class VideoPlayContract {
         /**
          * 加载影片数据
          *
-         * @param loadUrl Url
+         * @param mediaId Url
          */
-        void loadVideoInfo(String loadUrl);
+        void loadVideoInfo(String mediaId);
 
 
         /**
@@ -73,6 +76,22 @@ public class VideoPlayContract {
          * @param isLoadMore 是否是加载更多
          */
         void getCommentList(String mediaId, boolean isLoadMore);
+
+
+        /**
+         * 保存当前视频的播放状态
+         *
+         * @param record 播放记录
+         */
+        void saveRecord(Record record);
+
+
+        /**
+         * 添加到收藏
+         *
+         * @param collection  Collection
+         */
+        void addCollection(Collection collection);
 
 
     }

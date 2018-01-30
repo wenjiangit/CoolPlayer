@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wenjian.myplayer.R;
+import com.wenjian.myplayer.data.db.model.Collection;
+import com.wenjian.myplayer.data.db.model.Record;
 import com.wenjian.myplayer.data.network.model.Comment;
 import com.wenjian.myplayer.data.network.model.VideoDetail;
 import com.wenjian.myplayer.data.network.model.VideoInfo;
@@ -55,8 +58,11 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
     RecyclerView mGuessRecycler;
 
     private VideoDetail mVideoDetail;
+    private String mDataId;
+    private VideoInfo mVideoInfo;
 
     private static final String EXTRA_VIDEO_SRC = "video_src";
+    private static final String EXTRA_DATA_ID = "data_id";
     private HomeRecyclerAdapter mAdapter;
     private CommentRecyclerAdapter mCommentAdapter;
     private TxVideoPlayerController mController;
@@ -69,10 +75,22 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
         context.startActivity(starter);
     }
 
+    public static void start(Context context, String dataId) {
+        Intent starter = new Intent(context, VideoPlayActivity.class);
+        starter.putExtra(EXTRA_DATA_ID, dataId);
+        context.startActivity(starter);
+    }
+
     @Override
     protected boolean initArgs(Bundle bundle) {
+        mDataId = bundle.getString(EXTRA_DATA_ID);
         mVideoDetail = bundle.getParcelable(EXTRA_VIDEO_SRC);
-        return mVideoDetail != null;
+        if (TextUtils.isEmpty(mDataId)) {
+            if (mVideoDetail != null) {
+                mDataId = mVideoDetail.getDataId();
+            }
+        }
+        return !TextUtils.isEmpty(mDataId);
     }
 
     @Override
@@ -108,7 +126,7 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
         mCommentAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                getPresenter().getCommentList(mVideoDetail.getDataId(), isLoadMore = true);
+                getPresenter().getCommentList(mDataId, isLoadMore = true);
             }
         }, mCommentRecycler);
 
@@ -121,14 +139,16 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
     }
 
     private void loadData() {
-        getPresenter().loadVideoInfo(mVideoDetail.getLoadURL());
-        getPresenter().getCommentList(mVideoDetail.getDataId(), isLoadMore = false);
+        getPresenter().loadVideoInfo(mDataId);
+        getPresenter().getCommentList(mDataId, isLoadMore = false);
     }
 
     private void setupVideoPlayer() {
         mController = new TxVideoPlayerController(this);
         mVideoPlayer.setController(mController);
-        updateController(mVideoDetail.getTitle(), mVideoDetail.getDuration(), mVideoDetail.getPic());
+        if (mVideoDetail != null) {
+            updateController(mVideoDetail.getTitle(), mVideoDetail.getDuration(), mVideoDetail.getPic());
+        }
     }
 
     /**
@@ -157,6 +177,37 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
         WebActivity.start(this, mVideoDetail.getShareURL());
     }
 
+    @OnClick(R.id.iv_star)
+    void star() {
+        getPresenter().addCollection(buildCollection());
+    }
+
+    private Collection buildCollection() {
+        Collection collection = new Collection();
+        collection.setId(mDataId);
+        if (mVideoInfo != null) {
+            collection.setThumb(mVideoInfo.getPic());
+            collection.setTitle(mVideoInfo.getTitle());
+        } else if (mVideoDetail != null) {
+            collection.setThumb(mVideoDetail.getPic());
+            collection.setTitle(mVideoDetail.getTitle());
+        }
+        return collection;
+    }
+
+    private Record buildRecord() {
+        Record record = new Record();
+        record.setId(mDataId);
+        record.setCurrentProgress(mVideoPlayer.getCurrentPosition());
+        record.setTotalProgress(mVideoPlayer.getDuration());
+        record.setCurrentTime(System.currentTimeMillis());
+        if (mVideoInfo != null) {
+            record.setThumb(mVideoInfo.getPic());
+            record.setTitle(mVideoInfo.getTitle());
+        }
+        return record;
+    }
+
     @Override
     public VideoPlayContract.Presenter createPresenter() {
         return new VideoPlayPresenter();
@@ -167,6 +218,11 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
         return this;
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        getPresenter().saveRecord(buildRecord());
+    }
 
     @Override
     public void onBackPressed() {
@@ -183,6 +239,7 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
 
     @Override
     public void onLoadSuccess(VideoInfo info) {
+        this.mVideoInfo = info;
         if (mVideoPlayer.isPlaying()) {
             mVideoPlayer.releasePlayer();
         }

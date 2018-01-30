@@ -2,6 +2,7 @@ package com.wenjian.myplayer.widget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -62,8 +63,17 @@ public class CommonTitleBar extends RelativeLayout implements View.OnClickListen
         mIvClose.setOnClickListener(listener);
     }
 
-    public void setRightMenuClickListener(OnClickListener listener) {
+    public void addRightMenu(@NonNull CharSequence text, OnClickListener listener) {
         mTvRightMenu.setOnClickListener(listener);
+        mTvRightMenu.setText(text);
+    }
+
+    public TextView getRightMenu() {
+        return mTvRightMenu;
+    }
+
+    public void setRightMenuText(@NonNull CharSequence text) {
+        mTvRightMenu.setText(text);
     }
 
     public void setCanback(boolean canback) {

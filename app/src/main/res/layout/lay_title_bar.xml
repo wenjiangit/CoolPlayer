@@ -52,6 +52,7 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
+        android:gravity="center"
         android:foreground="@drawable/ic_touch_menu"
         android:textColor="@color/white"
         android:textSize="14sp"

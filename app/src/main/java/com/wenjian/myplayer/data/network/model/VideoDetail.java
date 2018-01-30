@@ -16,7 +16,6 @@ import org.greenrobot.greendao.annotation.Generated;
  *
  * @author jian.wen@ubtrobot.com
  */
-@Entity(nameInDb = "video")
 public class VideoDetail implements Parcelable {
 
     /*
@@ -37,19 +36,16 @@ public class VideoDetail implements Parcelable {
                     }
     * */
 
-    @Property(nameInDb = "air_time")
     @Expose
     private int airTime;
     @Property
     @Expose
     private String duration;
-    @Property(nameInDb = "load_type")
     @Expose
     private String loadType;
     @Property
     @Expose
     private float score;
-    @Property(nameInDb = "angle_icon")
     @Expose
     private String angleIcon;
     @Id
@@ -58,10 +54,8 @@ public class VideoDetail implements Parcelable {
     @Property
     @Expose
     private String description;
-    @Property(nameInDb = "load_url")
     @Expose
     private String loadURL;
-    @Property(nameInDb = "share_url")
     @Expose
     private String shareURL;
     @Property
@@ -70,11 +64,9 @@ public class VideoDetail implements Parcelable {
     @Property
     @Expose
     private String title;
-    @Property(nameInDb = "room_id")
     @Expose
     private String roomId;
 
-    @Property(nameInDb = "show_title")
     private String showTitle;
 
 

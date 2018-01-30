@@ -5,6 +5,7 @@ import android.net.Uri;
 import org.junit.Test;
 
 import java.net.URI;
+import java.util.Date;
 
 import static org.junit.Assert.*;
 
@@ -41,6 +42,11 @@ public class ExampleUnitTest {
         String query = URI.create(url).getQuery();
 
         System.out.println(query);
+    }
+
+   @Test
+    public void date_test() throws Exception {
+       System.out.println(String.format("%tF", System.currentTimeMillis()));
     }
 
 

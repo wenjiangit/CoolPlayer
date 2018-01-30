@@ -26,11 +26,9 @@ public class AppDataManager implements DataManager {
     private static Context sApplication;
     private final ApiHelper mApiHelper;
     private final PrefsHelper mPrefsHelper;
-    private final DbHelper mDbHelper;
 
     private AppDataManager() {
         mApiHelper = AppApiHelper.create();
-        mDbHelper = AppDbHelper.getInstance();
         mPrefsHelper = AppPrefsHelper.create();
     }
 
@@ -38,18 +36,7 @@ public class AppDataManager implements DataManager {
         sApplication = context.getApplicationContext();
     }
 
-    @Override
-    public void saveVideos(VideoDetail... videoDetails) {
-        mDbHelper.saveVideos(videoDetails);
-    }
-
-    @Override
-    public void saveShowDetail(ShowDetail... showDetails) {
-        mDbHelper.saveShowDetail(showDetails);
-    }
-
     private static class Holder {
-
         private static final AppDataManager INSTANCE = new AppDataManager();
     }
     public static AppDataManager getInstance() {
@@ -77,6 +64,11 @@ public class AppDataManager implements DataManager {
     @Override
     public Single<HttpResponse> doVideoListApiCall(String catalogId, String pnum) {
         return mApiHelper.doVideoListApiCall(catalogId, pnum);
+    }
+
+    @Override
+    public Single<HttpResponse> doVideoDetailApiCall(String mediaId) {
+        return mApiHelper.doVideoDetailApiCall(mediaId);
     }
 
     @Override

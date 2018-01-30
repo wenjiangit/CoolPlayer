@@ -5,6 +5,9 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.wenjian.core.utils.Logger;
+import com.wenjian.myplayer.data.db.AppDbHelper;
+import com.wenjian.myplayer.data.db.model.Collection;
+import com.wenjian.myplayer.data.db.model.Record;
 import com.wenjian.myplayer.data.network.model.Comment;
 import com.wenjian.myplayer.data.network.model.CommentInfo;
 import com.wenjian.myplayer.data.network.model.HttpResponse;
@@ -29,14 +32,14 @@ public class VideoPlayPresenter extends AppBasePresenter<VideoPlayContract.View>
     private int mPageNum = 1;
 
     @Override
-    public void loadVideoInfo(String loadUrl) {
-        if (TextUtils.isEmpty(loadUrl)) {
-            getView().showMessage("loadUrl is empty ...");
+    public void loadVideoInfo(String mediaId) {
+        if (TextUtils.isEmpty(mediaId)) {
+            getView().showMessage("mediaId is empty ...");
             return;
         }
         getView().showLoading();
         addDisposable(getDataManager()
-                .doVideoInfoApiCall(loadUrl)
+                .doVideoDetailApiCall(mediaId)
                 .doAfterSuccess(new Consumer<HttpResponse>() {
                     @Override
                     public void accept(HttpResponse response) throws Exception {
@@ -105,6 +108,16 @@ public class VideoPlayPresenter extends AppBasePresenter<VideoPlayContract.View>
                 }, getThrowableConsumer()));
     }
 
+    @Override
+    public void saveRecord(Record record) {
+        AppDbHelper.getInstance().save(Record.class, record);
+    }
+
+    @Override
+    public void addCollection(Collection collection) {
+        AppDbHelper.getInstance().save(Collection.class, collection);
+    }
+
     private void buildVideoDesc(VideoInfo result) {
         final String videoType = result.getVideoType();
         final int airTime = result.getAirTime();
@@ -115,17 +128,23 @@ public class VideoPlayPresenter extends AppBasePresenter<VideoPlayContract.View>
         final String region = result.getRegion();
 
         StringBuilder videoDescBuilder = new StringBuilder();
+        boolean hasLine = false;
         if (airTime != 0) {
             videoDescBuilder.append(airTime);
+            hasLine = true;
         }
         if (!TextUtils.isEmpty(region)) {
             videoDescBuilder.append(" | ")
                     .append(region);
+            hasLine = true;
         }
-        if (TextUtils.isEmpty(videoType)) {
+        if (!TextUtils.isEmpty(videoType)) {
             videoDescBuilder.append(videoType);
+            hasLine = true;
         }
-        videoDescBuilder.append("\n");
+        if (hasLine) {
+            videoDescBuilder.append("\n");
+        }
         if (!TextUtils.isEmpty(actors)) {
             videoDescBuilder.append("主演: ").append(actors).append("\n");
         }

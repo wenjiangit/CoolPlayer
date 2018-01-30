@@ -46,16 +46,21 @@ public interface ApiHelper {
      *
      * @param catagoryId 分类id
      * @param pnum       页数
-     * @return
+     * @return HttpResponse
      */
     Single<HttpResponse> doVideoListApiCall(String catagoryId, String pnum);
 
 
+    /**
+     * 获取影片详情
+     *
+     * @param mediaId id
+     * @return HttpResponse
+     */
+    Single<HttpResponse> doVideoDetailApiCall(String mediaId);
+
 
     Single<HttpResponse> doSimpleGetAction(String url);
-
-
-
 
 
 }

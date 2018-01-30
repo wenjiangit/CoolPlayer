@@ -17,10 +17,14 @@ public class BaseThreadFactory implements ThreadFactory {
 
     private static final AtomicInteger ATOMIC_INTEGER = new AtomicInteger();
 
-    private Builder mBuilder;
+    private final String namePattern;
+    private final boolean daemon;
+    private final int priority;
 
     BaseThreadFactory(Builder builder) {
-        this.mBuilder = builder;
+        this.daemon = builder.daemon;
+        this.namePattern = builder.namePattern;
+        this.priority = builder.priority;
     }
 
     @Override
@@ -31,20 +35,20 @@ public class BaseThreadFactory implements ThreadFactory {
                 r.run();
             }
         });
-        thread.setDaemon(mBuilder.daemon);
-        thread.setName(String.format(Locale.getDefault(), mBuilder.namePattern, ATOMIC_INTEGER.getAndIncrement()));
-        thread.setPriority(mBuilder.priority);
+        thread.setDaemon(daemon);
+        thread.setName(String.format(Locale.getDefault(), namePattern, ATOMIC_INTEGER.getAndIncrement()));
+        thread.setPriority(priority);
         return thread;
     }
 
 
     public static class Builder {
 
-        String namePattern = "thread-pool-%d";
+        private String namePattern = "thread-pool-%d";
 
-        boolean daemon = false;
+        private boolean daemon = false;
 
-        int priority = Thread.NORM_PRIORITY;
+        private int priority = Thread.NORM_PRIORITY;
 
 
         public static Builder builder() {

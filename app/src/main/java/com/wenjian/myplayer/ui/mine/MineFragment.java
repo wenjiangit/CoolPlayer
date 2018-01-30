@@ -1,16 +1,20 @@
 package com.wenjian.myplayer.ui.mine;
 
 
-import android.support.design.widget.AppBarLayout;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Button;
 
 import com.wenjian.core.ui.base.BaseFragment;
-import com.wenjian.core.utils.Logger;
 import com.wenjian.myplayer.R;
+import com.wenjian.myplayer.data.db.AppDbHelper;
+import com.wenjian.myplayer.data.db.model.Collection;
+import com.wenjian.myplayer.ui.record.RecordActivity;
+
+import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 我的
@@ -20,10 +24,10 @@ import butterknife.BindView;
 public class MineFragment extends BaseFragment {
 
 
-    @BindView(R.id.appbar)
-    AppBarLayout mAppbar;
-    @BindView(R.id.iv_img)
-    ImageView mIvImg;
+    @BindView(R.id.btn_record)
+    Button mBtnRecord;
+    @BindView(R.id.btn_collect)
+    Button mBtnCollect;
 
     public MineFragment() {
         // Required empty public constructor
@@ -38,36 +42,23 @@ public class MineFragment extends BaseFragment {
     protected void initWidget(View rootView) {
         super.initWidget(rootView);
 
-        mAppbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                Logger.d("verticalOffset", "verticalOffset: %d", verticalOffset);
+    }
 
-                if (verticalOffset == 0) {
-                    //完全展开
-                    mIvImg.setScaleX(1.5f);
-                    mIvImg.setScaleY(1.5f);
+    @OnClick(R.id.btn_record)
+    void record() {
+        RecordActivity.start(getActivity());
+    }
 
-                } else {
-                    verticalOffset = Math.abs(verticalOffset);
-                    int totalScrollRange = appBarLayout.getTotalScrollRange();
-                    if (verticalOffset >= totalScrollRange) {//完全收缩
-                        mIvImg.setScaleX(1);
-                        mIvImg.setScaleY(1);
-                    } else {
-                        float progress = (float) (1 + (verticalOffset / (float) totalScrollRange) * 0.5);
-                        mIvImg.setScaleX(progress);
-                        mIvImg.setScaleY(progress);
-                    }
-                }
-            }
-        });
+     @OnClick(R.id.btn_collect)
+    void collect() {
 
+    }
 
-
-
-
-
+    @Override
+    protected void initData() {
+        super.initData();
+        List<Collection> records = AppDbHelper.getInstance().loadAllSync(Collection.class);
+        Log.d(TAG, "initData: " + records);
     }
 
 

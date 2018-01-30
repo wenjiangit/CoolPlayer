@@ -32,4 +32,7 @@ public interface ApiEndPoint {
     String FIND_PAGE_INFO = BuildConfig.BASE_URL + "find/findPageInfoMsg.do";
 
 
+    String VIDEO_DETAIL = BuildConfig.BASE_URL + "videoDetailApi/videoDetail.do";
+
+
 }

@@ -3,6 +3,9 @@ package com.wenjian.myplayer;
 import android.content.Context;
 
 import com.androidnetworking.AndroidNetworking;
+import com.raizlabs.android.dbflow.config.DatabaseConfig;
+import com.raizlabs.android.dbflow.config.FlowConfig;
+import com.raizlabs.android.dbflow.config.FlowManager;
 import com.wenjian.core.utils.Utils;
 import com.wenjian.myplayer.data.AppDataManager;
 import com.wenjian.myplayer.data.db.AppDbHelper;
@@ -32,7 +35,7 @@ public class Application extends android.app.Application {
 
         AndroidNetworking.enableLogging();
 
-        AppDbHelper.getInstance().init(this);
+        FlowManager.init(this);
 
     }
 
