@@ -6,8 +6,6 @@ import android.text.TextUtils;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.google.gson.annotations.Expose;
 
-import org.greenrobot.greendao.annotation.Id;
-
 import java.util.List;
 
 /**

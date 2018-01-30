@@ -5,10 +5,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 
-import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Property;
-import org.greenrobot.greendao.annotation.Generated;
+
 
 /**
  * Description: VideoDetail
@@ -38,30 +35,24 @@ public class VideoDetail implements Parcelable {
 
     @Expose
     private int airTime;
-    @Property
     @Expose
     private String duration;
     @Expose
     private String loadType;
-    @Property
     @Expose
     private float score;
     @Expose
     private String angleIcon;
-    @Id
     @Expose
     private String dataId;
-    @Property
     @Expose
     private String description;
     @Expose
     private String loadURL;
     @Expose
     private String shareURL;
-    @Property
     @Expose
     private String pic;
-    @Property
     @Expose
     private String title;
     @Expose
@@ -237,7 +228,6 @@ public class VideoDetail implements Parcelable {
         this.roomId = in.readString();
     }
 
-    @Generated(hash = 114069867)
     public VideoDetail(int airTime, String duration, String loadType, float score, String angleIcon, String dataId, String description, String loadURL, String shareURL, String pic, String title, String roomId, String showTitle) {
         this.airTime = airTime;
         this.duration = duration;

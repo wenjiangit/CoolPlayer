@@ -49,6 +49,8 @@ dependencies {
     implementation "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
     annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
 
+    compile 'com.daprlabs.aaron:cardstack:0.3.1-beta0'
+
     implementation 'com.github.pinguo-zhouwei:MZBannerView:v2.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
