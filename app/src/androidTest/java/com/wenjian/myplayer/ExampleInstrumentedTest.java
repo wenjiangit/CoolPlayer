@@ -4,18 +4,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-import android.util.Log;
-
-import com.wenjian.myplayer.data.db.AppDbHelper;
-import com.wenjian.myplayer.data.db.model.Record;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
 
 import static org.junit.Assert.*;
 
@@ -41,14 +32,14 @@ public class ExampleInstrumentedTest {
         System.out.println(catalogId);
     }
 
-     @Test
+    @Test
     public void db_test() throws Exception {
 
         /* for (int i = 0; i < 10; i++) {
              Record record = new Record();
              record.setId(UUID.randomUUID().toString());
              record.setTitle("test" + i);
-             AppDbHelper.getInstance().saveRecord(record);
+             AppDbHelper.getInstance().saveSingle(record);
          }
 
          Thread.sleep(2000);
@@ -56,11 +47,19 @@ public class ExampleInstrumentedTest {
          List<Record> records = AppDbHelper.getInstance().loadAllRecords();
          Log.d("test", records.toString());*/
 
-     }
+    }
+
+    @Test
+    public void initDatabase() {
 
 
 
+    }
 
+    @Test
+    public void insertUsers() {
+
+    }
 
 
 }

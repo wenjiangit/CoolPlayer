@@ -5,9 +5,8 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.wenjian.core.utils.Logger;
-import com.wenjian.myplayer.data.db.AppDbHelper;
-import com.wenjian.myplayer.data.db.model.Collection;
-import com.wenjian.myplayer.data.db.model.Record;
+import com.wenjian.myplayer.data.db.source.collection.Collection;
+import com.wenjian.myplayer.data.db.source.record.Record;
 import com.wenjian.myplayer.data.network.model.Comment;
 import com.wenjian.myplayer.data.network.model.CommentInfo;
 import com.wenjian.myplayer.data.network.model.HttpResponse;
@@ -110,12 +109,12 @@ public class VideoPlayPresenter extends AppBasePresenter<VideoPlayContract.View>
 
     @Override
     public void saveRecord(Record record) {
-        AppDbHelper.getInstance().save(Record.class, record);
+        getDataManager().getRecordDataSource().saveSingle(record);
     }
 
     @Override
     public void addCollection(Collection collection) {
-        AppDbHelper.getInstance().save(Collection.class, collection);
+        getDataManager().getCollectionDataSource().saveSingle(collection);
     }
 
     private void buildVideoDesc(VideoInfo result) {

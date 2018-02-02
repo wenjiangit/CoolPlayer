@@ -1,7 +1,7 @@
 package com.wenjian.myplayer.ui.record;
 
 import com.wenjian.core.mvp.base.MvpPresenter;
-import com.wenjian.myplayer.data.db.model.Record;
+import com.wenjian.myplayer.data.db.source.record.Record;
 import com.wenjian.myplayer.ui.base.AppBaseView;
 
 import java.util.List;

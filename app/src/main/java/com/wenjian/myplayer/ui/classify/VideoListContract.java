@@ -1,8 +1,11 @@
 package com.wenjian.myplayer.ui.classify;
 
 import com.wenjian.core.mvp.base.MvpPresenter;
+import com.wenjian.myplayer.data.db.source.collection.Collection;
 import com.wenjian.myplayer.data.network.model.VideoListInfo;
 import com.wenjian.myplayer.ui.base.AppBaseView;
+
+import java.util.List;
 
 /**
  * Description: VideoListContract
@@ -22,12 +25,16 @@ public class VideoListContract {
 
         void onLoadMoreComplete();
 
+        void onCollectionLoaded(List<Collection> collections);
+
     }
 
 
     public interface Presenter extends MvpPresenter<View>{
 
         void getVideoList(String catalogId,boolean isLoadMore);
+
+        void loadAllCollections();
 
     }
 }

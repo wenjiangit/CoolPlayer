@@ -4,11 +4,12 @@ import android.content.Context;
 
 import com.wenjian.myplayer.data.db.AppDbHelper;
 import com.wenjian.myplayer.data.db.DbHelper;
+import com.wenjian.myplayer.data.db.source.DataSource;
+import com.wenjian.myplayer.data.db.source.collection.CollectionDataSource;
+import com.wenjian.myplayer.data.db.source.record.RecordDataSource;
 import com.wenjian.myplayer.data.network.ApiHelper;
 import com.wenjian.myplayer.data.network.AppApiHelper;
 import com.wenjian.myplayer.data.network.model.HttpResponse;
-import com.wenjian.myplayer.data.network.model.ShowDetail;
-import com.wenjian.myplayer.data.network.model.VideoDetail;
 import com.wenjian.myplayer.data.prefs.AppPrefsHelper;
 import com.wenjian.myplayer.data.prefs.PrefsHelper;
 
@@ -26,19 +27,32 @@ public class AppDataManager implements DataManager {
     private static Context sApplication;
     private final ApiHelper mApiHelper;
     private final PrefsHelper mPrefsHelper;
+    private final DbHelper mDbHelper;
 
     private AppDataManager() {
         mApiHelper = AppApiHelper.create();
         mPrefsHelper = AppPrefsHelper.create();
+        mDbHelper = AppDbHelper.getInstance(sApplication);
     }
 
     public static void init(Context context) {
         sApplication = context.getApplicationContext();
     }
 
+    @Override
+    public RecordDataSource getRecordDataSource() {
+        return mDbHelper.getRecordDataSource();
+    }
+
+    @Override
+    public CollectionDataSource getCollectionDataSource() {
+        return mDbHelper.getCollectionDataSource();
+    }
+
     private static class Holder {
         private static final AppDataManager INSTANCE = new AppDataManager();
     }
+
     public static AppDataManager getInstance() {
         if (sApplication == null) {
             throw new NullPointerException("you should call init first");
@@ -58,7 +72,7 @@ public class AppDataManager implements DataManager {
 
     @Override
     public Single<HttpResponse> doCommentListApiCall(String mediaId, String pnum) {
-        return mApiHelper.doCommentListApiCall(mediaId,pnum);
+        return mApiHelper.doCommentListApiCall(mediaId, pnum);
     }
 
     @Override

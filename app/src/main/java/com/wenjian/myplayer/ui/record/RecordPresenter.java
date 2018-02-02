@@ -2,10 +2,9 @@ package com.wenjian.myplayer.ui.record;
 
 import android.util.Log;
 
-import com.wenjian.core.mvp.base.BaseMvpPresenter;
-import com.wenjian.myplayer.data.db.AppDbHelper;
-import com.wenjian.myplayer.data.db.DbHelper;
-import com.wenjian.myplayer.data.db.model.Record;
+import com.wenjian.myplayer.data.db.source.record.Record;
+import com.wenjian.myplayer.data.db.source.DataSource;
+import com.wenjian.myplayer.ui.base.AppBasePresenter;
 
 import java.util.List;
 
@@ -16,21 +15,29 @@ import java.util.List;
  * @author jian.wen@ubtrobot.com
  */
 
-public class RecordPresenter extends BaseMvpPresenter<RecordContract.View>
+public class RecordPresenter extends AppBasePresenter<RecordContract.View>
         implements RecordContract.Presenter {
 
     private static final String TAG = "RecordPresenter";
 
+    @SuppressWarnings("unchecked")
     @Override
     public void loadData() {
         getView().showLoading();
-        AppDbHelper.getInstance().loadAllAsync(Record.class, new DbHelper.QueryCallback<Record>() {
+        getDataManager().getRecordDataSource().loadAllAsync(new DataSource.LoadCallback<Record>() {
             @Override
-            public void onQuerySuccess(List<Record> result) {
+            public void onDataLoaded(List<Record> records) {
                 getView().hideLoading();
-                getView().setEditEnable(result!= null && !result.isEmpty());
-                getView().onLoadSuccess(result);
+                getView().setEditEnable(true);
+                getView().onLoadSuccess(records);
             }
+
+            @Override
+            public void onDataNotAvailable() {
+                getView().hideLoading();
+                getView().setEditEnable(false);
+            }
+
         });
     }
 
@@ -41,7 +48,7 @@ public class RecordPresenter extends BaseMvpPresenter<RecordContract.View>
         }
         long start = System.currentTimeMillis();
         for (String recordId : recordIds) {
-            AppDbHelper.getInstance().deleteById(Record.class, recordId);
+            getDataManager().getRecordDataSource().deleteRecordById(recordId);
         }
         long time = System.currentTimeMillis() - start;
         Log.d(TAG, "deleteRecords: " + time);

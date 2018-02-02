@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wenjian.myplayer.R;
-import com.wenjian.myplayer.data.db.model.Record;
+import com.wenjian.myplayer.data.db.source.record.Record;
 import com.wenjian.myplayer.ui.videoplay.VideoPlayActivity;
 
 import java.util.ArrayList;

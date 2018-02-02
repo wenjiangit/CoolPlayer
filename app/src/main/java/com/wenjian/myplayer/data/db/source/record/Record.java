@@ -1,11 +1,10 @@
-package com.wenjian.myplayer.data.db.model;
+package com.wenjian.myplayer.data.db.source.record;
 
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.ColumnIgnore;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
-import com.wenjian.myplayer.data.db.DbflowDatabase;
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 /**
  * Description: Record
@@ -13,30 +12,39 @@ import com.wenjian.myplayer.data.db.DbflowDatabase;
  *
  * @author jian.wen@ubtrobot.com
  */
+@Entity
+public class Record {
 
-@Table(database = DbflowDatabase.class)
-public class Record extends BaseModel{
-
-    @Column
+    @ColumnInfo
     private String title;
 
-    @Column
+    @ColumnInfo
     private String thumb;
 
-    @Column
+    @ColumnInfo(name = "current_progress")
     private long currentProgress;
 
-    @Column
-    private long currentTime;
+    @ColumnInfo(name = "update_time")
+    private long updateTime;
 
-    @Column
+    @ColumnInfo(name = "total_progress")
     private long totalProgress;
 
+    @NonNull
     @PrimaryKey
     private String id;
 
-    @ColumnIgnore
+    @Ignore
     private boolean checked = false;
+
+    public Record(String title, String thumb, long currentProgress, long currentTime, long totalProgress, @NonNull String id) {
+        this.title = title;
+        this.thumb = thumb;
+        this.currentProgress = currentProgress;
+        this.updateTime = currentTime;
+        this.totalProgress = totalProgress;
+        this.id = id;
+    }
 
     public Record() {
     }
@@ -65,12 +73,12 @@ public class Record extends BaseModel{
         this.currentProgress = currentProgress;
     }
 
-    public long getCurrentTime() {
-        return this.currentTime;
+    public long getUpdateTime() {
+        return this.updateTime;
     }
 
-    public void setCurrentTime(long currentTime) {
-        this.currentTime = currentTime;
+    public void setUpdateTime(long updateTime) {
+        this.updateTime = updateTime;
     }
 
     public String getId() {
@@ -95,7 +103,7 @@ public class Record extends BaseModel{
                 "title='" + title + '\'' +
                 ", thumb='" + thumb + '\'' +
                 ", currentProgress=" + currentProgress +
-                ", currentTime=" + currentTime +
+                ", updateTime=" + updateTime +
                 ", totalProgress=" + totalProgress +
                 ", id='" + id + '\'' +
                 '}';

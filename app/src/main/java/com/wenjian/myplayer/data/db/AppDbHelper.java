@@ -1,18 +1,12 @@
 package com.wenjian.myplayer.data.db;
 
-import android.support.annotation.NonNull;
+import android.content.Context;
 
-import com.raizlabs.android.dbflow.config.DatabaseDefinition;
-import com.raizlabs.android.dbflow.config.FlowManager;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
-import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
-import com.raizlabs.android.dbflow.structure.database.transaction.ITransaction;
-import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
-import com.wenjian.myplayer.data.db.model.Record;
-import com.wenjian.myplayer.data.db.model.Record_Table;
-
-import java.util.Collection;
-import java.util.List;
+import com.wenjian.myplayer.AppExecutors;
+import com.wenjian.myplayer.data.db.source.collection.CollectionDataSource;
+import com.wenjian.myplayer.data.db.source.collection.LocalCollectionDataSource;
+import com.wenjian.myplayer.data.db.source.record.LocalRecordDataSource;
+import com.wenjian.myplayer.data.db.source.record.RecordDataSource;
 
 /**
  * Description: AppDbHelper
@@ -23,94 +17,43 @@ import java.util.List;
 
 public class AppDbHelper implements DbHelper {
 
-    private AppDbHelper() {
+    private final PlayerDatabase mDatabase;
+
+    private final RecordDataSource mRecordDataSource;
+
+    private final CollectionDataSource mCollectionDataSource;
+
+    private static volatile AppDbHelper INSTANCE;
+
+
+    private AppDbHelper(Context context) {
+        mDatabase = PlayerDatabase.getInstance(context);
+        mRecordDataSource = LocalRecordDataSource.getInstance(mDatabase.recordDao(), new AppExecutors());
+        mCollectionDataSource = LocalCollectionDataSource.getInstance(mDatabase.collectionDao(), new AppExecutors());
     }
 
-    private static class Holder {
-        private static final AppDbHelper INSTANCE = new AppDbHelper();
-    }
 
-    public static AppDbHelper getInstance() {
-        return Holder.INSTANCE;
-    }
-
-
-    @Override
-    public <T> void save(final Class<T> clz, final Collection<T> ts) {
-        if (ts == null || ts.isEmpty()) {
-            return;
-        }
-
-        DatabaseDefinition database = FlowManager.getDatabase(DbflowDatabase.class);
-        database.beginTransactionAsync(new ITransaction() {
-            @Override
-            public void execute(DatabaseWrapper databaseWrapper) {
-                FlowManager.getModelAdapter(clz)
-                        .saveAll(ts);
+    public static DbHelper getInstance(Context context) {
+        if (INSTANCE == null) {
+            synchronized (AppDbHelper.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new AppDbHelper(context);
+                }
             }
-        }).build().execute();
-    }
-
-    @Override
-    public <T> void save(Class<T> clz, T t) {
-        if (t == null) {
-            return;
         }
-        FlowManager.getModelAdapter(clz).save(t);
-    }
-
-    @Override
-    public <T> void delete(final Class<T> clz, final Collection<T> ts) {
-        if (ts == null || ts.isEmpty()) {
-            return;
-        }
-        DatabaseDefinition database = FlowManager.getDatabase(DbflowDatabase.class);
-        database.beginTransactionAsync(new ITransaction() {
-            @Override
-            public void execute(DatabaseWrapper databaseWrapper) {
-                FlowManager.getModelAdapter(clz)
-                        .deleteAll(ts);
-            }
-        }).build().execute();
-    }
-
-    @Override
-    public <T> void delete(Class<T> clz, T t) {
-        if (t == null) {
-            return;
-        }
-        FlowManager.getModelAdapter(clz).delete(t);
-    }
-
-    public void deleteById(Class clz,String id) {
-        SQLite.delete().from(clz)
-                .where(Record_Table.id.eq(id))
-                .query();
+        return INSTANCE;
     }
 
 
     @Override
-    public <T> List<T> loadAllSync(Class<T> clz) {
-        return SQLite.select()
-                .from(clz)
-                .queryList();
+    public RecordDataSource getRecordDataSource() {
+        return mRecordDataSource;
     }
 
     @Override
-    public <T> void loadAllAsync(Class<T> clz, final QueryCallback<T> callback) {
-        SQLite.select()
-                .from(clz)
-                .async()
-                .queryListResultCallback(new QueryTransaction.QueryResultListCallback<T>() {
-                    @Override
-                    public void onListQueryResult(QueryTransaction transaction, @NonNull List<T> tResult) {
-                        if (callback != null) {
-                            callback.onQuerySuccess(tResult);
-                        }
-                    }
-                }).execute();
+    public CollectionDataSource getCollectionDataSource() {
+        return mCollectionDataSource;
     }
-
 
 
 }

@@ -16,8 +16,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wenjian.myplayer.R;
-import com.wenjian.myplayer.data.db.model.Collection;
-import com.wenjian.myplayer.data.db.model.Record;
+import com.wenjian.myplayer.data.db.source.collection.Collection;
+import com.wenjian.myplayer.data.db.source.record.Record;
 import com.wenjian.myplayer.data.network.model.Comment;
 import com.wenjian.myplayer.data.network.model.VideoDetail;
 import com.wenjian.myplayer.data.network.model.VideoInfo;
@@ -185,6 +185,7 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
     private Collection buildCollection() {
         Collection collection = new Collection();
         collection.setId(mDataId);
+        collection.setUpdateTime(System.currentTimeMillis());
         if (mVideoInfo != null) {
             collection.setThumb(mVideoInfo.getPic());
             collection.setTitle(mVideoInfo.getTitle());
@@ -200,7 +201,7 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
         record.setId(mDataId);
         record.setCurrentProgress(mVideoPlayer.getCurrentPosition());
         record.setTotalProgress(mVideoPlayer.getDuration());
-        record.setCurrentTime(System.currentTimeMillis());
+        record.setUpdateTime(System.currentTimeMillis());
         if (mVideoInfo != null) {
             record.setThumb(mVideoInfo.getPic());
             record.setTitle(mVideoInfo.getTitle());

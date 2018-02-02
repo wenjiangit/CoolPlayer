@@ -49,6 +49,7 @@ ext {
     rxandroidVersion = '2.0.1'
     gsonVersion = '2.8.0'
     timberVersion = '4.5.1'
+    roomVersion = "1.0.0"
 
     recyclerAdapterHelper = '2.9.30'
 

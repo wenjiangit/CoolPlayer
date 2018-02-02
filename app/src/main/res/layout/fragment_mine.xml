@@ -18,5 +18,55 @@
         android:layout_height="wrap_content"
         android:text="收藏列表" />
 
+    <Button
+        android:id="@+id/btn_create"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="创建user表" />
+
+    <Button
+        android:id="@+id/btn_insert_one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="插入一条数据" />
+
+
+    <Button
+        android:id="@+id/btn_delete_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查询所有" />
+
+    <Button
+        android:id="@+id/btn_delete_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="删除所有" />
+
+    <Button
+        android:id="@+id/btn_query_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="通过id查询" />
+
+     <Button
+        android:id="@+id/btn_inset_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="插入一个列表" />
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </ScrollView>
+
 
 </LinearLayout>

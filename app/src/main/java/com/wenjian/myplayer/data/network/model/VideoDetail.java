@@ -13,7 +13,7 @@ import com.google.gson.annotations.Expose;
  *
  * @author jian.wen@ubtrobot.com
  */
-public class VideoDetail implements Parcelable {
+public class VideoDetail implements Parcelable,VideoDisplay {
 
     /*
     * {
@@ -141,12 +141,34 @@ public class VideoDetail implements Parcelable {
         this.pic = pic;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
 
+    @Override
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public String getThumb() {
+        return getPic();
+    }
+
+    @Override
+    public void setThumb(String thumb) {
+        setPic(thumb);
+    }
+
+    @Override
+    public String getId() {
+        return getDataId();
+    }
+
+    @Override
+    public void setId(String id) {
+        setDataId(id);
     }
 
     public String getRoomId() {

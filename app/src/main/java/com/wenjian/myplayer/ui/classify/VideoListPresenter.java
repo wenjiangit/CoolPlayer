@@ -2,11 +2,15 @@ package com.wenjian.myplayer.ui.classify;
 
 import com.google.gson.Gson;
 import com.wenjian.core.utils.Logger;
+import com.wenjian.myplayer.data.db.source.DataSource;
+import com.wenjian.myplayer.data.db.source.collection.Collection;
 import com.wenjian.myplayer.data.network.ApiEndPoint;
 import com.wenjian.myplayer.data.network.model.HttpResponse;
 import com.wenjian.myplayer.data.network.model.VideoListInfo;
 import com.wenjian.myplayer.ui.base.AppBasePresenter;
 import com.wenjian.myplayer.utils.FileUtils;
+
+import java.util.List;
 
 import io.reactivex.functions.Consumer;
 
@@ -112,6 +116,25 @@ public class VideoListPresenter extends AppBasePresenter<VideoListContract.View>
                     }
                 }));
 
+
+    }
+
+    @Override
+    public void loadAllCollections() {
+        getView().showLoading();
+        getDataManager().getCollectionDataSource().loadAllAsync(new DataSource.LoadCallback<Collection>() {
+            @Override
+            public void onDataLoaded(List<Collection> dataList) {
+                getView().hideLoading();
+                getView().onCollectionLoaded(dataList);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                getView().hideLoading();
+                getView().showMessage("没有数据!");
+            }
+        });
 
     }
 }

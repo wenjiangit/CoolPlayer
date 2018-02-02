@@ -1,7 +1,7 @@
 package com.wenjian.myplayer.data.db;
 
-import java.util.Collection;
-import java.util.List;
+import com.wenjian.myplayer.data.db.source.collection.CollectionDataSource;
+import com.wenjian.myplayer.data.db.source.record.RecordDataSource;
 
 /**
  * Description: DbHelper
@@ -13,43 +13,10 @@ import java.util.List;
 public interface DbHelper {
 
 
-    /**
-     * @param clz
-     * @param ts
-     * @param <T>
-     */
-    <T> void save(Class<T> clz, Collection<T> ts);
-
-    /**
-     * @param clz
-     * @param t
-     * @param <T>
-     */
-    <T> void save(Class<T> clz, T t);
+    RecordDataSource getRecordDataSource();
 
 
-    <T> void delete(Class<T> clz, Collection<T> ts);
-
-
-    <T> void delete(Class<T> clz, T t);
-
-
-    <T> List<T> loadAllSync(Class<T> clz);
-
-
-    <T> void loadAllAsync(Class<T> clz, QueryCallback<T> callback);
-
-
-    interface QueryCallback<T> {
-        /**
-         * 数据查询成功
-         *
-         * @param result 结果
-         */
-        void onQuerySuccess(List<T> result);
-
-
-    }
+    CollectionDataSource getCollectionDataSource();
 
 
 }

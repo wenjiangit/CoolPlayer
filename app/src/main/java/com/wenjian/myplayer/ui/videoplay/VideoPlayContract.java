@@ -1,8 +1,8 @@
 package com.wenjian.myplayer.ui.videoplay;
 
 import com.wenjian.core.mvp.base.MvpPresenter;
-import com.wenjian.myplayer.data.db.model.Collection;
-import com.wenjian.myplayer.data.db.model.Record;
+import com.wenjian.myplayer.data.db.source.collection.Collection;
+import com.wenjian.myplayer.data.db.source.record.Record;
 import com.wenjian.myplayer.data.network.model.Comment;
 import com.wenjian.myplayer.data.network.model.VideoInfo;
 import com.wenjian.myplayer.ui.base.AppBaseView;

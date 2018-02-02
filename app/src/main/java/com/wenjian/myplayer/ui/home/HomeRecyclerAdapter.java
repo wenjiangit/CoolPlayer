@@ -17,6 +17,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.wenjian.myplayer.R;
 import com.wenjian.myplayer.data.network.model.ShowDetail;
 import com.wenjian.myplayer.data.network.model.VideoDetail;
+import com.wenjian.myplayer.data.network.model.VideoDisplay;
 import com.wenjian.myplayer.ui.classify.VideoListActivity;
 import com.wenjian.myplayer.ui.videoplay.VideoPlayActivity;
 import com.zhouwei.mzbanner.MZBannerView;
@@ -78,7 +79,8 @@ public class HomeRecyclerAdapter extends BaseMultiItemQuickAdapter<ShowDetail, B
                 RecyclerView recycler = helper.getView(R.id.item_recycler);
                 GridLayoutManager layoutManager = new GridLayoutManager(mContext, getSpanCount(item));
                 recycler.setLayoutManager(layoutManager);
-                final SubRecyclerAdapter adapter = new SubRecyclerAdapter(item.getChildList());
+                final SubRecyclerAdapter adapter = new SubRecyclerAdapter();
+                adapter.setNewData(new ArrayList<VideoDisplay>(item.getChildList()));
                 recycler.setAdapter(adapter);
                 layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                     @Override

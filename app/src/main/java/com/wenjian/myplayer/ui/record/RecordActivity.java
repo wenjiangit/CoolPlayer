@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.wenjian.core.widget.recycler.DefaultItemDecoration;
 import com.wenjian.myplayer.R;
-import com.wenjian.myplayer.data.db.model.Record;
+import com.wenjian.myplayer.data.db.source.record.Record;
 import com.wenjian.myplayer.ui.base.AppBaseActivity;
 import com.wenjian.myplayer.widget.CommonTitleBar;
 
