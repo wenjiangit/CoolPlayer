@@ -1,5 +1,8 @@
 package com.wenjian.core.mvp;
 
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.OnLifecycleEvent;
 import android.os.Bundle;
 
 import com.wenjian.core.mvp.base.MvpPresenter;
@@ -13,7 +16,7 @@ import com.wenjian.core.mvp.base.MvpView;
  * @date 2017/8/31
  */
 
-public class ActivityMvpDelegateImpl<V extends MvpView, P extends MvpPresenter<V>> implements ActivityMvpDelegate {
+public class ActivityMvpDelegateImpl<V extends MvpView, P extends MvpPresenter<V>> implements ActivityMvpDelegate{
 
 
     private MvpCallback<V, P> mMvpCallback;

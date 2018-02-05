@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.wenjian.myplayer.data.db.source.record.Record;
 import com.wenjian.myplayer.data.db.source.DataSource;
-import com.wenjian.myplayer.ui.base.AppBasePresenter;
+import com.wenjian.myplayer.ui.base.AppPresenter;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
  * @author jian.wen@ubtrobot.com
  */
 
-public class RecordPresenter extends AppBasePresenter<RecordContract.View>
+public class RecordPresenter extends AppPresenter<RecordContract.View>
         implements RecordContract.Presenter {
 
     private static final String TAG = "RecordPresenter";
@@ -27,6 +27,9 @@ public class RecordPresenter extends AppBasePresenter<RecordContract.View>
         getDataManager().getRecordDataSource().loadAllAsync(new DataSource.LoadCallback<Record>() {
             @Override
             public void onDataLoaded(List<Record> records) {
+                if (!isActive()) {
+                    return;
+                }
                 getView().hideLoading();
                 getView().setEditEnable(true);
                 getView().onLoadSuccess(records);
@@ -34,6 +37,9 @@ public class RecordPresenter extends AppBasePresenter<RecordContract.View>
 
             @Override
             public void onDataNotAvailable() {
+                if (!isActive()) {
+                    return;
+                }
                 getView().hideLoading();
                 getView().setEditEnable(false);
             }

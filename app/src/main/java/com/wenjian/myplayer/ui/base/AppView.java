@@ -4,12 +4,12 @@ import com.wenjian.core.mvp.base.MvpView;
 import com.wenjian.myplayer.ui.UiDelegate;
 
 /**
- * Description: AppBaseView
+ * Description: AppView
  * Date: 2018/1/8
  *
  * @author jian.wen@ubtrobot.com
  */
 
-public interface AppBaseView extends MvpView,UiDelegate{
+public interface AppView extends MvpView,UiDelegate{
 
 }

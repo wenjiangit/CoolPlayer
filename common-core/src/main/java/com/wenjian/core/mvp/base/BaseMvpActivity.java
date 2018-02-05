@@ -17,7 +17,7 @@ import com.wenjian.core.mvp.MvpCallback;
  */
 
 public abstract class BaseMvpActivity<V extends MvpView, P extends MvpPresenter<V>> extends AppCompatActivity
-        implements MvpCallback<V, P> {
+        implements MvpCallback<V, P>{
 
     private ActivityMvpDelegate mMvpDelegate;
     private P presenter;
@@ -29,6 +29,7 @@ public abstract class BaseMvpActivity<V extends MvpView, P extends MvpPresenter<
         }
         return mMvpDelegate;
     }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -2,19 +2,13 @@ package com.wenjian.myplayer.ui.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.TextView;
 
 import com.wenjian.core.mvp.base.BaseMvpActivity;
 import com.wenjian.core.mvp.base.MvpPresenter;
-import com.wenjian.core.utils.ToastUtils;
-import com.wenjian.myplayer.R;
+import com.wenjian.core.mvp.lifemvp.LifeMvpActivity;
 import com.wenjian.myplayer.ui.UiDelegate;
 import com.wenjian.myplayer.ui.UiDelegateBase;
-import com.wenjian.myplayer.ui.dialog.AppProgressDialog;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -26,8 +20,8 @@ import butterknife.Unbinder;
  * @author jian.wen@ubtrobot.com
  */
 
-public abstract class AppBaseActivity<V extends AppBaseView, P extends MvpPresenter<V>> extends BaseMvpActivity<V, P>
-        implements AppBaseView, UiDelegate {
+public abstract class AppBaseActivity<V extends AppView, P extends MvpPresenter<V>> extends LifeMvpActivity<V, P>
+        implements AppView, UiDelegate {
 
     private Unbinder mUnbinder;
     private UiDelegate mUiDelegate;

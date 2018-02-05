@@ -2,7 +2,7 @@ package com.wenjian.myplayer.ui.record;
 
 import com.wenjian.core.mvp.base.MvpPresenter;
 import com.wenjian.myplayer.data.db.source.record.Record;
-import com.wenjian.myplayer.ui.base.AppBaseView;
+import com.wenjian.myplayer.ui.base.AppView;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class RecordContract {
 
-    public interface View extends AppBaseView{
+    public interface View extends AppView {
 
         void onLoadSuccess(List<Record> records);
 

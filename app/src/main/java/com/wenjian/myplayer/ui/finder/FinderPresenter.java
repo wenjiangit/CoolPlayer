@@ -3,7 +3,7 @@ package com.wenjian.myplayer.ui.finder;
 import com.wenjian.core.utils.Logger;
 import com.wenjian.myplayer.data.network.model.HttpResponse;
 import com.wenjian.myplayer.data.network.model.VideoListInfo;
-import com.wenjian.myplayer.ui.base.AppBasePresenter;
+import com.wenjian.myplayer.ui.base.AppPresenter;
 
 import io.reactivex.functions.Consumer;
 
@@ -14,7 +14,7 @@ import io.reactivex.functions.Consumer;
  * @author jian.wen@ubtrobot.com
  */
 
-public class FinderPresenter extends AppBasePresenter<FinderContract.View>
+public class FinderPresenter extends AppPresenter<FinderContract.View>
         implements FinderContract.Presenter {
 
     private int mPagerNum = 1;

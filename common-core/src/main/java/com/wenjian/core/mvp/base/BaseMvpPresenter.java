@@ -7,7 +7,7 @@ package com.wenjian.core.mvp.base;
  * @date 2017/8/31
  */
 
-public class BaseMvpPresenter<V> implements MvpPresenter<V> {
+public class BaseMvpPresenter<V extends MvpView> implements MvpPresenter<V> {
 
     private V view;
 

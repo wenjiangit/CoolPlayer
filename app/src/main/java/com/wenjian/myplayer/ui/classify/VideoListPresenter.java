@@ -7,7 +7,7 @@ import com.wenjian.myplayer.data.db.source.collection.Collection;
 import com.wenjian.myplayer.data.network.ApiEndPoint;
 import com.wenjian.myplayer.data.network.model.HttpResponse;
 import com.wenjian.myplayer.data.network.model.VideoListInfo;
-import com.wenjian.myplayer.ui.base.AppBasePresenter;
+import com.wenjian.myplayer.ui.base.AppPresenter;
 import com.wenjian.myplayer.utils.FileUtils;
 
 import java.util.List;
@@ -21,7 +21,7 @@ import io.reactivex.functions.Consumer;
  * @author jian.wen@ubtrobot.com
  */
 
-public class VideoListPresenter extends AppBasePresenter<VideoListContract.View>
+public class VideoListPresenter extends AppPresenter<VideoListContract.View>
         implements VideoListContract.Presenter {
 
     private int mPagerNum = 1;

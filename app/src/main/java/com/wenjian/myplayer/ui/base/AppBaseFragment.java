@@ -3,13 +3,13 @@ package com.wenjian.myplayer.ui.base;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.wenjian.core.mvp.base.BaseMvpFragment;
 import com.wenjian.core.mvp.base.MvpPresenter;
+import com.wenjian.core.mvp.lifemvp.LifeMvpFragment;
 import com.wenjian.myplayer.ui.UiDelegate;
 
 import butterknife.ButterKnife;
@@ -22,8 +22,8 @@ import butterknife.Unbinder;
  * @author jian.wen@ubtrobot.com
  */
 
-public abstract class AppBaseFragment<V extends AppBaseView, P extends MvpPresenter<V>> extends BaseMvpFragment<V, P>
-        implements AppBaseView {
+public abstract class AppBaseFragment<V extends AppView, P extends MvpPresenter<V>> extends LifeMvpFragment<V, P>
+        implements AppView {
 
     /**
      * 标识是否是第一次初始化数据

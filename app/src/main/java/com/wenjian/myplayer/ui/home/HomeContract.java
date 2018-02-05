@@ -2,7 +2,7 @@ package com.wenjian.myplayer.ui.home;
 
 import com.wenjian.core.mvp.base.MvpPresenter;
 import com.wenjian.myplayer.data.network.model.ShowDetail;
-import com.wenjian.myplayer.ui.base.AppBaseView;
+import com.wenjian.myplayer.ui.base.AppView;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class HomeContract {
 
-    public interface View extends AppBaseView {
+    public interface View extends AppView {
 
         /**
          * 数据加载成功

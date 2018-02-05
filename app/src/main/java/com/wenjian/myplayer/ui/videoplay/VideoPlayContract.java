@@ -5,7 +5,7 @@ import com.wenjian.myplayer.data.db.source.collection.Collection;
 import com.wenjian.myplayer.data.db.source.record.Record;
 import com.wenjian.myplayer.data.network.model.Comment;
 import com.wenjian.myplayer.data.network.model.VideoInfo;
-import com.wenjian.myplayer.ui.base.AppBaseView;
+import com.wenjian.myplayer.ui.base.AppView;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import java.util.List;
 
 public class VideoPlayContract {
 
-    public interface View extends AppBaseView {
+    public interface View extends AppView {
 
         /**
          * 加载成功

@@ -11,7 +11,7 @@ import com.wenjian.myplayer.data.network.model.Comment;
 import com.wenjian.myplayer.data.network.model.CommentInfo;
 import com.wenjian.myplayer.data.network.model.HttpResponse;
 import com.wenjian.myplayer.data.network.model.VideoInfo;
-import com.wenjian.myplayer.ui.base.AppBasePresenter;
+import com.wenjian.myplayer.ui.base.AppPresenter;
 import com.wenjian.myplayer.utils.FileUtils;
 
 import java.util.List;
@@ -25,7 +25,7 @@ import io.reactivex.functions.Consumer;
  * @author jian.wen@ubtrobot.com
  */
 
-public class VideoPlayPresenter extends AppBasePresenter<VideoPlayContract.View>
+public class VideoPlayPresenter extends AppPresenter<VideoPlayContract.View>
         implements VideoPlayContract.Presenter {
 
     private int mPageNum = 1;
