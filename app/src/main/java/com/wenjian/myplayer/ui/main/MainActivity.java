@@ -5,6 +5,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.wenjian.core.utils.ToastUtils;
 import com.wenjian.core.widget.NavHelper;
 import com.wenjian.myplayer.R;
 import com.wenjian.myplayer.ui.base.BaseSimpleActivity;
@@ -24,6 +25,8 @@ public class MainActivity extends BaseSimpleActivity implements BottomNavigation
     @BindView(R.id.navigation)
     BottomNavigationView mNavigation;
     private NavHelper<Integer> mNavHelper;
+
+    private static final long DELAY_TIME = 2000;
 
     @Override
     protected Object getContentLayout() {
@@ -62,4 +65,16 @@ public class MainActivity extends BaseSimpleActivity implements BottomNavigation
 
     }
 
+    long exitTime;
+
+    @Override
+    public void onBackPressed() {
+        long current = System.currentTimeMillis();
+        if (current - exitTime > DELAY_TIME) {
+            ToastUtils.showShort("再按一次返回键退出程序!");
+            exitTime = current;
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

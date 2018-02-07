@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.wenjian.core.mvp.base.BaseMvpActivity;
 import com.wenjian.core.mvp.base.MvpPresenter;
 import com.wenjian.core.mvp.lifemvp.LifeMvpActivity;
 import com.wenjian.myplayer.ui.UiDelegate;

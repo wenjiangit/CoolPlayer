@@ -41,7 +41,7 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="16dp"
-        android:text="更多"
+        android:text=">"
         android:textColor="#8d9ca9"
         android:layout_alignParentRight="true"
         android:layout_marginRight="16dp" />

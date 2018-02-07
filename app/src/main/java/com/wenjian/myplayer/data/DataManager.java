@@ -2,6 +2,7 @@ package com.wenjian.myplayer.data;
 
 import com.wenjian.myplayer.data.db.DbHelper;
 import com.wenjian.myplayer.data.network.ApiHelper;
+import com.wenjian.myplayer.data.prefs.PrefsHelper;
 
 /**
  * Description: DataManager
@@ -10,6 +11,6 @@ import com.wenjian.myplayer.data.network.ApiHelper;
  * @author jian.wen@ubtrobot.com
  */
 
-public interface DataManager extends ApiHelper,DbHelper{
+public interface DataManager extends ApiHelper,DbHelper,PrefsHelper{
 
 }

@@ -92,7 +92,7 @@ public class LocalCollectionDataSource implements CollectionDataSource {
                 });
             }
         };
-        mAppExecutors.forMainThread(runnable);
+        mAppExecutors.forDiskIO(runnable);
     }
 
     @Override

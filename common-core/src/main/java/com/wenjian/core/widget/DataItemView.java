@@ -75,6 +75,7 @@ public class DataItemView extends LinearLayout {
 
         if (builder.enable && builder.clickListener != null) {
             this.setOnClickListener(builder.clickListener);
+            this.setClickable(true);
         }
 
         if (builder.id != -1) {

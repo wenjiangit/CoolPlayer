@@ -51,10 +51,14 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:' + rootProject.recyclerAdapterHelper
 
-    compile "android.arch.persistence.room:runtime:$rootProject.roomVersion"
+    implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
 
-    compile 'com.daprlabs.aaron:cardstack:0.3.1-beta0'
+    implementation "android.arch.persistence.room:rxjava2:1.0.0"
+
+    implementation 'com.daprlabs.aaron:cardstack:0.3.1-beta0'
+
+    implementation 'com.zhihu.android:matisse:0.4.3'
 
     implementation 'com.github.pinguo-zhouwei:MZBannerView:v2.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'

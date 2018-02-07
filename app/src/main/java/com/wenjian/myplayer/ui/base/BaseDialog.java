@@ -10,13 +10,14 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.RelativeLayout;
 
 /**
- * Description: BaseDialog，子类必须重写{@link }
+ * Description: BaseDialog，子类必须重写{@link Fragment#onCreateView(LayoutInflater, ViewGroup, Bundle)}
  * Date: 2018/1/8
  *
  * @author jian.wen@ubtrobot.com
@@ -50,7 +51,7 @@ public abstract class BaseDialog extends DialogFragment {
 
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         setup(view);
     }
 

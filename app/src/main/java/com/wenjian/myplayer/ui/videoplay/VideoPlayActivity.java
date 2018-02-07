@@ -174,7 +174,7 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
 
     @OnClick(R.id.iv_share)
     void share() {
-        WebActivity.start(this, mVideoDetail.getShareURL());
+//        WebActivity.start(this, mVideoInfo.getKuaiKan());
     }
 
     @OnClick(R.id.iv_star)

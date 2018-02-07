@@ -1,6 +1,7 @@
 package com.wenjian.myplayer.ui.dialog;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -27,7 +28,7 @@ public class AppProgressDialog extends BaseDialog {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
         return inflater.inflate(R.layout.lay_custom_dialog, container, false);

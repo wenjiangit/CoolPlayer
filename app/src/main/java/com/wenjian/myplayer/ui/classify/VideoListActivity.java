@@ -12,7 +12,6 @@ import android.text.TextUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wenjian.myplayer.R;
 import com.wenjian.myplayer.data.db.source.collection.Collection;
-import com.wenjian.myplayer.data.network.model.VideoDetail;
 import com.wenjian.myplayer.data.network.model.VideoDisplay;
 import com.wenjian.myplayer.data.network.model.VideoListInfo;
 import com.wenjian.myplayer.ui.base.AppBaseActivity;

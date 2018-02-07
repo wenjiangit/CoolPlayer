@@ -1,6 +1,5 @@
 package com.wenjian.myplayer.ui.home;
 
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -11,11 +10,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wenjian.core.utils.UiUtils;
 import com.wenjian.myplayer.R;
-import com.wenjian.myplayer.data.network.model.VideoDetail;
 import com.wenjian.myplayer.data.network.model.VideoDisplay;
 import com.wenjian.myplayer.ui.videoplay.VideoPlayActivity;
-
-import java.util.List;
 
 /**
  * Description: SubRecyclerAdapter

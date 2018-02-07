@@ -9,4 +9,8 @@ package com.wenjian.myplayer.data.prefs;
 
 public interface PrefsHelper {
 
+    void saveUserHead(String uri);
+
+    String getUserHead();
+
 }

@@ -125,12 +125,18 @@ public class VideoListPresenter extends AppPresenter<VideoListContract.View>
         getDataManager().getCollectionDataSource().loadAllAsync(new DataSource.LoadCallback<Collection>() {
             @Override
             public void onDataLoaded(List<Collection> dataList) {
+                if (!isActive()) {
+                    return;
+                }
                 getView().hideLoading();
                 getView().onCollectionLoaded(dataList);
             }
 
             @Override
             public void onDataNotAvailable() {
+                if (!isActive()) {
+                    return;
+                }
                 getView().hideLoading();
                 getView().showMessage("没有数据!");
             }

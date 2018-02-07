@@ -31,5 +31,8 @@ public interface RecordDao {
     @Query("DELETE FROM Record WHERE id =:id")
     void deleteRecordById(String id);
 
+    @Query("SELECT * FROM Record LIMIT 3")
+    List<Record> getDisplayRecords();
+
 
 }

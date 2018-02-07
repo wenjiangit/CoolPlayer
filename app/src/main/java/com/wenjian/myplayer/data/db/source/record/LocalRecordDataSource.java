@@ -3,6 +3,7 @@ package com.wenjian.myplayer.data.db.source.record;
 import android.support.annotation.NonNull;
 
 import com.wenjian.myplayer.AppExecutors;
+import com.wenjian.myplayer.data.db.source.DataSource;
 
 import java.lang.ref.WeakReference;
 import java.util.Collection;
@@ -81,20 +82,7 @@ public class LocalRecordDataSource implements RecordDataSource {
             @Override
             public void run() {
                 final List<Record> records = mRecordDao.getRecords();
-                mAppExecutors.forMainThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (records != null) {
-                            if (callbackReference.get() != null) {
-                                callbackReference.get().onDataLoaded(records);
-                            }
-                        } else {
-                            if (callbackReference.get() != null) {
-                                callbackReference.get().onDataNotAvailable();
-                            }
-                        }
-                    }
-                });
+                postToMainThread(records, callbackReference);
             }
         };
         mAppExecutors.forDiskIO(runnable);
@@ -115,6 +103,37 @@ public class LocalRecordDataSource implements RecordDataSource {
             }
         });
     }
+
+    @Override
+    public void getDisplayRecords(final LoadCallback<Record> callback) {
+        final WeakReference<LoadCallback<Record>> callbackReference = new WeakReference<>(callback);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                final List<Record> records = mRecordDao.getDisplayRecords();
+                postToMainThread(records, callbackReference);
+            }
+        };
+        mAppExecutors.forDiskIO(runnable);
+    }
+
+    private void postToMainThread(final List<Record> records, final WeakReference<LoadCallback<Record>> callbackReference) {
+        mAppExecutors.forMainThread(new Runnable() {
+            @Override
+            public void run() {
+                if (records != null) {
+                    if (callbackReference.get() != null) {
+                        callbackReference.get().onDataLoaded(records);
+                    }
+                } else {
+                    if (callbackReference.get() != null) {
+                        callbackReference.get().onDataNotAvailable();
+                    }
+                }
+            }
+        });
+    }
+
 
     @Override
     public void clearAll() {

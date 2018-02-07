@@ -14,6 +14,7 @@ public class AndroidLifecycleObserver implements LifecycleObserver, AndroidLifec
 
     private final String TAG = this.getClass().getSimpleName();
 
+
     @Override
     public void onCreate() {
         Log.d(TAG, "onCreate: ");
@@ -52,6 +53,5 @@ public class AndroidLifecycleObserver implements LifecycleObserver, AndroidLifec
     @Override
     public void onAny() {
         Log.d(TAG, "onAny: ");
-
     }
 }

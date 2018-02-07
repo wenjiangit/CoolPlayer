@@ -1,6 +1,7 @@
 package com.wenjian.myplayer.data;
 
 import android.content.Context;
+import android.util.SparseArray;
 
 import com.wenjian.myplayer.data.db.AppDbHelper;
 import com.wenjian.myplayer.data.db.DbHelper;
@@ -31,7 +32,7 @@ public class AppDataManager implements DataManager {
 
     private AppDataManager() {
         mApiHelper = AppApiHelper.create();
-        mPrefsHelper = AppPrefsHelper.create();
+        mPrefsHelper = AppPrefsHelper.getInstance(sApplication);
         mDbHelper = AppDbHelper.getInstance(sApplication);
     }
 
@@ -47,6 +48,16 @@ public class AppDataManager implements DataManager {
     @Override
     public CollectionDataSource getCollectionDataSource() {
         return mDbHelper.getCollectionDataSource();
+    }
+
+    @Override
+    public void saveUserHead(String uri) {
+        mPrefsHelper.saveUserHead(uri);
+    }
+
+    @Override
+    public String getUserHead() {
+        return mPrefsHelper.getUserHead();
     }
 
     private static class Holder {

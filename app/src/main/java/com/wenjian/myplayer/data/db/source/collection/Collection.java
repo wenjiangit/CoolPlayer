@@ -31,16 +31,15 @@ public class Collection implements VideoDisplay{
     @ColumnInfo(name = "update_time")
     private Long updateTime = System.currentTimeMillis();
 
-    @Ignore
     public Collection() {
     }
 
-    public Collection(@NonNull String id, String title, String thumb, Long updateTime) {
+   /* public Collection(@NonNull String id, String title, String thumb, Long updateTime) {
         this.id = id;
         this.title = title;
         this.thumb = thumb;
         this.updateTime = updateTime;
-    }
+    }*/
 
     @Override
     @NonNull

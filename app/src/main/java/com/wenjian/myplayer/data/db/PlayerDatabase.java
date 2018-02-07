@@ -5,6 +5,7 @@ import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverters;
 import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.wenjian.myplayer.data.db.source.record.RecordDao;
  * @author jian.wen@ubtrobot.com
  */
 @Database(entities = {Collection.class, Record.class}, version = 2)
+@TypeConverters(Converters.class)
 public abstract class PlayerDatabase extends RoomDatabase {
 
     private static final String TAG = "PlayerDatabase";
@@ -39,7 +41,6 @@ public abstract class PlayerDatabase extends RoomDatabase {
             if (INSTANCE == null) {
                 INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                         PlayerDatabase.class, "player.db")
-                        .allowMainThreadQueries()
                         .addMigrations(MIGRATION_1_2)
                         .build();
             }
