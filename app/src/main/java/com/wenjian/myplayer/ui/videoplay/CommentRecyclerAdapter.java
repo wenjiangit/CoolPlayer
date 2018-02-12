@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wenjian.myplayer.R;
-import com.wenjian.myplayer.data.network.model.Comment;
+import com.wenjian.myplayer.entity.Comment;
 
 import java.util.ArrayList;
 

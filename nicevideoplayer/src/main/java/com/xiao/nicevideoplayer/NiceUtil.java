@@ -160,7 +160,7 @@ public class NiceUtil {
     /**
      * 隐藏导航栏
      *
-     * @param context
+     * @param context Context
      */
     public static void hideNavigationBar(Context context) {
         View decorView = scanForActivity(context)
@@ -168,20 +168,23 @@ public class NiceUtil {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             int uiFlags = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                     | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN;
             decorView.setSystemUiVisibility(uiFlags);
         } else {
-            decorView.setSystemUiVisibility(View.GONE);
+            scanForActivity(context).getWindow()
+                    .setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                            WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
     }
 
+    /**
+     * 显示系统UI
+     * @param context Context
+     */
     public static void showNavigationBar(Context context) {
         Window window = scanForActivity(context).getWindow();
         View decorView = window.getDecorView();
-        decorView.setSystemUiVisibility(View.VISIBLE);
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
     }
 
 }

@@ -1,28 +1,17 @@
-package com.wenjian.myplayer.data.network.model;
+package com.wenjian.myplayer.entity;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.annotations.Expose;
 
 /**
- * Description: HttpResponse
+ * Description: ApiResponse
  * Date: 2018/1/8
  *
  * @author jian.wen@ubtrobot.com
  */
 
-public class HttpResponse {
-
-    private static final Gson GSON;
+public class ApiResponse<T> {
 
     private static final String HTTP_OK = "200";
-
-    static {
-        GSON = new GsonBuilder()
-                .excludeFieldsWithoutExposeAnnotation()
-                .create();
-    }
 
     @Expose
     private String msg;
@@ -31,7 +20,7 @@ public class HttpResponse {
     private String code;
 
     @Expose
-    private Object ret;
+    private T ret;
 
     public String getMsg() {
         return msg;
@@ -49,7 +38,7 @@ public class HttpResponse {
         this.code = code;
     }
 
-    public Object getRet() {
+    public T getRet() {
         return ret;
     }
 
@@ -62,26 +51,9 @@ public class HttpResponse {
         return HTTP_OK.equals(code);
     }
 
-    /**
-     * 通过传递class类型获取bean对象
-     *
-     * @param clazz Class
-     * @param <T>   泛型类型
-     * @return 实例
-     */
-    public <T> T getResult(Class<T> clazz) {
-        try {
-            return GSON.fromJson(GSON.toJson(ret), clazz);
-        } catch (JsonSyntaxException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
     @Override
     public String toString() {
-        return "HttpResponse{" +
+        return "ApiResponse{" +
                 "msg='" + msg + '\'' +
                 ", code='" + code + '\'' +
                 ", ret=" + ret +

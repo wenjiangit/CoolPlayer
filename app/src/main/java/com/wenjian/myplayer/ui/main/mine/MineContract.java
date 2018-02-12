@@ -1,4 +1,4 @@
-package com.wenjian.myplayer.ui.mine;
+package com.wenjian.myplayer.ui.main.mine;
 
 import com.wenjian.core.mvp.base.MvpPresenter;
 import com.wenjian.myplayer.data.db.source.record.Record;

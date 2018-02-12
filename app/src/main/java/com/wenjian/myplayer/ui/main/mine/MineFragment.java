@@ -1,4 +1,4 @@
-package com.wenjian.myplayer.ui.mine;
+package com.wenjian.myplayer.ui.main.mine;
 
 
 import android.content.Intent;

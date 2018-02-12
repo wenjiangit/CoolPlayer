@@ -37,7 +37,7 @@ public class Record {
     @Ignore
     private boolean checked = false;
 
-    public Record(String title, String thumb, long currentProgress, long currentTime, long totalProgress, @NonNull String id) {
+    public Record(String title, String thumb, long currentProgress, long currentTime, long totalProgress, String id) {
         this.title = title;
         this.thumb = thumb;
         this.currentProgress = currentProgress;

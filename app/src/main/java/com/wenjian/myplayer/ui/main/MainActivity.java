@@ -9,9 +9,9 @@ import com.wenjian.core.utils.ToastUtils;
 import com.wenjian.core.widget.NavHelper;
 import com.wenjian.myplayer.R;
 import com.wenjian.myplayer.ui.base.BaseSimpleActivity;
-import com.wenjian.myplayer.ui.finder.FinderFragment;
-import com.wenjian.myplayer.ui.home.HomeFragment;
-import com.wenjian.myplayer.ui.mine.MineFragment;
+import com.wenjian.myplayer.ui.main.finder.FinderFragment;
+import com.wenjian.myplayer.ui.main.home.HomeFragment;
+import com.wenjian.myplayer.ui.main.mine.MineFragment;
 
 import butterknife.BindView;
 

@@ -1,7 +1,8 @@
-package com.wenjian.myplayer.data.network.model;
+package com.wenjian.myplayer.entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.wenjian.myplayer.entity.Comment;
 
 import java.util.List;
 

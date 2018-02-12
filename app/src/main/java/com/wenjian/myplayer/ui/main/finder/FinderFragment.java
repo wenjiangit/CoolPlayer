@@ -1,4 +1,4 @@
-package com.wenjian.myplayer.ui.finder;
+package com.wenjian.myplayer.ui.main.finder;
 
 
 import android.util.Log;
@@ -7,10 +7,9 @@ import android.view.ViewGroup;
 
 import com.daprlabs.cardstack.SwipeDeck;
 import com.daprlabs.cardstack.SwipeFrameLayout;
-import com.wenjian.core.ui.base.BaseFragment;
 import com.wenjian.core.utils.ScreenUtils;
 import com.wenjian.myplayer.R;
-import com.wenjian.myplayer.data.network.model.VideoDetail;
+import com.wenjian.myplayer.entity.VideoDetail;
 import com.wenjian.myplayer.ui.base.AppBaseFragment;
 import com.wenjian.myplayer.widget.CommonTitleBar;
 

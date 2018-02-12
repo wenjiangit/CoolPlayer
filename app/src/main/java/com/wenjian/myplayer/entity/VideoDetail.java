@@ -1,4 +1,4 @@
-package com.wenjian.myplayer.data.network.model;
+package com.wenjian.myplayer.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;

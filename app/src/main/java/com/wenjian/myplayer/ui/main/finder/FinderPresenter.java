@@ -1,10 +1,12 @@
-package com.wenjian.myplayer.ui.finder;
+package com.wenjian.myplayer.ui.main.finder;
 
 import com.wenjian.core.utils.Logger;
-import com.wenjian.myplayer.data.network.model.HttpResponse;
-import com.wenjian.myplayer.data.network.model.VideoListInfo;
+import com.wenjian.myplayer.data.network.HttpEngine;
+import com.wenjian.myplayer.entity.ApiResponse;
+import com.wenjian.myplayer.entity.VideoListInfo;
 import com.wenjian.myplayer.ui.base.AppPresenter;
 
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -26,15 +28,15 @@ public class FinderPresenter extends AppPresenter<FinderContract.View>
     @Override
     public void loadData() {
         getView().showLoading();
-        addDisposable(getDataManager().doVideoListApiCall(CATAGORY_ID, String.valueOf(mPagerNum++))
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().mainThread())
-                .subscribe(new Consumer<HttpResponse>() {
+        Disposable videoListDisposable = HttpEngine.getInstance()
+                .service()
+                .getVideoList(CATAGORY_ID, String.valueOf(mPagerNum++))
+                .subscribe(new Consumer<ApiResponse<VideoListInfo>>() {
                     @Override
-                    public void accept(HttpResponse response) throws Exception {
+                    public void accept(ApiResponse<VideoListInfo> response) throws Exception {
                         getView().hideLoading();
                         if (response.isSuccess()) {
-                            VideoListInfo videoListInfo = response.getResult(VideoListInfo.class);
+                            VideoListInfo videoListInfo = response.getRet();
                             Logger.d(TAG, "videoListInfo: %s", videoListInfo);
                             if (mPagerNum <= videoListInfo.getTotalPnum()) {
                                 getView().onLoadSuccess(videoListInfo.getList());
@@ -45,6 +47,9 @@ public class FinderPresenter extends AppPresenter<FinderContract.View>
                             handleApiError(response);
                         }
                     }
-                }, getThrowableConsumer()));
+                }, providerExHandler());
+
+        addDisposable(videoListDisposable);
+
     }
 }

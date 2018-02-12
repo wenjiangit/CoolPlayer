@@ -1,5 +1,6 @@
 package com.wenjian.myplayer;
 
+import android.app.Application;
 import android.content.Context;
 
 import com.androidnetworking.AndroidNetworking;
@@ -7,13 +8,13 @@ import com.wenjian.core.utils.Utils;
 import com.wenjian.myplayer.data.AppDataManager;
 
 /**
- * Description: Application
+ * Description: MoviesApp
  * Date: 2018/1/8
  *
  * @author jian.wen@ubtrobot.com
  */
 
-public class Application extends android.app.Application {
+public class MoviesApp extends Application {
 
     public static Context sContext;
 

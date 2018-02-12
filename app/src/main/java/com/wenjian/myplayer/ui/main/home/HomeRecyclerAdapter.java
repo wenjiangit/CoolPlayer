@@ -1,4 +1,4 @@
-package com.wenjian.myplayer.ui.home;
+package com.wenjian.myplayer.ui.main.home;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -15,9 +15,9 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wenjian.myplayer.R;
-import com.wenjian.myplayer.data.network.model.ShowDetail;
-import com.wenjian.myplayer.data.network.model.VideoDetail;
-import com.wenjian.myplayer.data.network.model.VideoDisplay;
+import com.wenjian.myplayer.entity.ShowDetail;
+import com.wenjian.myplayer.entity.VideoDetail;
+import com.wenjian.myplayer.entity.VideoDisplay;
 import com.wenjian.myplayer.ui.classify.VideoListActivity;
 import com.wenjian.myplayer.ui.videoplay.VideoPlayActivity;
 import com.zhouwei.mzbanner.MZBannerView;

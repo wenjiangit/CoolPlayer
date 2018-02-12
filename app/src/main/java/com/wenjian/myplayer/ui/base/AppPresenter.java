@@ -5,7 +5,7 @@ import com.wenjian.core.utils.Logger;
 import com.wenjian.myplayer.R;
 import com.wenjian.myplayer.data.AppDataManager;
 import com.wenjian.myplayer.data.DataManager;
-import com.wenjian.myplayer.data.network.model.HttpResponse;
+import com.wenjian.myplayer.entity.ApiResponse;
 import com.wenjian.myplayer.rx.AppSchedulerProvider;
 import com.wenjian.myplayer.rx.SchedulerProvider;
 
@@ -26,7 +26,6 @@ public class AppPresenter<V extends AppView> extends LifeMvpPresenter<V> {
 
     private final DataManager mDataManager;
     private final CompositeDisposable mCompositeDisposable;
-    private final SchedulerProvider mSchedulerProvider;
 
     private Consumer<Throwable> mThrowableConsumer = new Consumer<Throwable>() {
         @Override
@@ -40,26 +39,21 @@ public class AppPresenter<V extends AppView> extends LifeMvpPresenter<V> {
     public AppPresenter() {
         mDataManager = AppDataManager.getInstance();
         mCompositeDisposable = new CompositeDisposable();
-        mSchedulerProvider = new AppSchedulerProvider();
     }
 
     protected DataManager getDataManager() {
         return mDataManager;
     }
 
-    protected SchedulerProvider getSchedulerProvider() {
-        return mSchedulerProvider;
-    }
-
     protected void addDisposable(Disposable disposable) {
         mCompositeDisposable.add(disposable);
     }
 
-    protected Consumer<Throwable> getThrowableConsumer() {
+    protected Consumer<Throwable> providerExHandler() {
         return mThrowableConsumer;
     }
 
-    protected void handleApiError(HttpResponse response) {
+    protected void handleApiError(ApiResponse response) {
         if (!response.isSuccess()) {
             getView().onError(response.getMsg());
         }

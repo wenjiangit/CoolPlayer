@@ -1,21 +1,20 @@
 package com.wenjian.myplayer.ui.videoplay;
 
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.google.gson.Gson;
 import com.wenjian.core.utils.Logger;
 import com.wenjian.myplayer.data.db.source.collection.Collection;
 import com.wenjian.myplayer.data.db.source.record.Record;
-import com.wenjian.myplayer.data.network.model.Comment;
-import com.wenjian.myplayer.data.network.model.CommentInfo;
-import com.wenjian.myplayer.data.network.model.HttpResponse;
-import com.wenjian.myplayer.data.network.model.VideoInfo;
+import com.wenjian.myplayer.data.network.HttpEngine;
+import com.wenjian.myplayer.entity.ApiResponse;
+import com.wenjian.myplayer.entity.Comment;
+import com.wenjian.myplayer.entity.CommentInfo;
+import com.wenjian.myplayer.entity.VideoInfo;
 import com.wenjian.myplayer.ui.base.AppPresenter;
-import com.wenjian.myplayer.utils.FileUtils;
 
 import java.util.List;
 
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -37,57 +36,48 @@ public class VideoPlayPresenter extends AppPresenter<VideoPlayContract.View>
             return;
         }
         getView().showLoading();
-        addDisposable(getDataManager()
-                .doVideoDetailApiCall(mediaId)
-                .doAfterSuccess(new Consumer<HttpResponse>() {
+
+        Disposable videoInfoDisposable = HttpEngine.getInstance()
+                .service()
+                .videoDetail(mediaId)
+                .subscribe(new Consumer<ApiResponse<VideoInfo>>() {
                     @Override
-                    public void accept(HttpResponse response) throws Exception {
-                        Log.d(TAG, "thread: " + Thread.currentThread().getName());
-                        String json = new Gson().toJson(response);
-                        FileUtils.save("doVideoInfoApiCall", json);
-                    }
-                })
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().mainThread())
-                .subscribe(new Consumer<HttpResponse>() {
-                    @Override
-                    public void accept(HttpResponse response) throws Exception {
+                    public void accept(ApiResponse<VideoInfo> apiResponse) throws Exception {
                         getView().hideLoading();
-                        if (response.isSuccess()) {
-                            Logger.d(TAG, "loadVideoInfo >>> %s", response);
-                            final VideoInfo result = response.getResult(VideoInfo.class);
-                            getView().onLoadSuccess(result);
-                            buildVideoDesc(result);
+                        Logger.d(TAG, "loadVideoInfo >>> %s", apiResponse);
+                        if (apiResponse.isSuccess()) {
+                            VideoInfo videoInfo = apiResponse.getRet();
+                            getView().onLoadSuccess(videoInfo);
+                            buildVideoDesc(videoInfo);
                         } else {
-                            handleApiError(response);
+                            handleApiError(apiResponse);
                         }
                     }
-                }, getThrowableConsumer()));
+                }, providerExHandler());
+
+        addDisposable(videoInfoDisposable);
     }
 
     @Override
     public void getCommentList(String mediaId, final boolean isLoadMore) {
+        if (TextUtils.isEmpty(mediaId)) {
+            getView().showMessage("mediaId is empty ...");
+            return;
+        }
         if (isLoadMore) {
             mPageNum++;
         } else {
             mPageNum = 1;
         }
-        addDisposable(getDataManager()
-                .doCommentListApiCall(mediaId, String.valueOf(mPageNum))
-                .doAfterSuccess(new Consumer<HttpResponse>() {
+
+        Disposable disposable = HttpEngine.getInstance()
+                .service()
+                .getCommentList(mediaId, String.valueOf(mPageNum))
+                .subscribe(new Consumer<ApiResponse<CommentInfo>>() {
                     @Override
-                    public void accept(HttpResponse response) throws Exception {
-                        String json = new Gson().toJson(response);
-                        FileUtils.save("doCommentListApiCall", json);
-                    }
-                })
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().mainThread())
-                .subscribe(new Consumer<HttpResponse>() {
-                    @Override
-                    public void accept(HttpResponse response) throws Exception {
-                        if (response.isSuccess()) {
-                            final CommentInfo commentInfo = response.getResult(CommentInfo.class);
+                    public void accept(ApiResponse<CommentInfo> apiResponse) throws Exception {
+                        if (apiResponse.isSuccess()) {
+                            final CommentInfo commentInfo = apiResponse.getRet();
                             final List<Comment> commentList = commentInfo.getCommentList();
                             final int totalRecords = commentInfo.getTotalRecords();
                             getView().setCommentCount(totalRecords);
@@ -101,10 +91,11 @@ public class VideoPlayPresenter extends AppPresenter<VideoPlayContract.View>
                                 getView().onCommentLoaded(commentList);
                             }
                         } else {
-                            handleApiError(response);
+                            handleApiError(apiResponse);
                         }
                     }
-                }, getThrowableConsumer()));
+                }, providerExHandler());
+        addDisposable(disposable);
     }
 
     @Override

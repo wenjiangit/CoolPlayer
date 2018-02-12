@@ -3,7 +3,7 @@ package com.wenjian.myplayer.utils;
 import android.support.annotation.NonNull;
 
 import com.wenjian.core.utils.NetworkUtils;
-import com.wenjian.myplayer.Application;
+import com.wenjian.myplayer.MoviesApp;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,7 +47,7 @@ public class OkhttpUtils {
      * @param builder Builder
      */
     private static void addCacheControl(OkHttpClient.Builder builder) {
-        Cache cache = new Cache(new File(Application.getContext().getCacheDir(), "network"), MAX_DISK_CACHE_SIZE);
+        Cache cache = new Cache(new File(MoviesApp.getContext().getCacheDir(), "network"), MAX_DISK_CACHE_SIZE);
         Interceptor cacheInterceptor = new Interceptor() {
             @Override
             public Response intercept(@NonNull Chain chain) throws IOException {

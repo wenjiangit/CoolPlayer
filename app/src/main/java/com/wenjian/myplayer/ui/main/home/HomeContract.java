@@ -1,7 +1,7 @@
-package com.wenjian.myplayer.ui.home;
+package com.wenjian.myplayer.ui.main.home;
 
 import com.wenjian.core.mvp.base.MvpPresenter;
-import com.wenjian.myplayer.data.network.model.ShowDetail;
+import com.wenjian.myplayer.entity.ShowDetail;
 import com.wenjian.myplayer.ui.base.AppView;
 
 import java.util.List;

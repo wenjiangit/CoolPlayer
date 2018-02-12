@@ -1,4 +1,4 @@
-package com.wenjian.myplayer.ui.home;
+package com.wenjian.myplayer.ui.main.home;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +10,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wenjian.core.utils.UiUtils;
 import com.wenjian.myplayer.R;
-import com.wenjian.myplayer.data.network.model.VideoDisplay;
+import com.wenjian.myplayer.entity.VideoDisplay;
 import com.wenjian.myplayer.ui.videoplay.VideoPlayActivity;
 
 /**

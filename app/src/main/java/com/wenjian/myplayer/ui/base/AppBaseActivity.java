@@ -59,16 +59,6 @@ public abstract class AppBaseActivity<V extends AppView, P extends MvpPresenter<
         }
     }
 
-    protected void setToolbarTitle(CharSequence title) {
-       /* Toolbar toolbar = findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            if (getSupportActionBar() != null) {
-                getSupportActionBar().setTitle(title);
-            }
-        }*/
-    }
-
     /**
      * 初始化窗口
      */

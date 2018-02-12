@@ -1,4 +1,4 @@
-package com.wenjian.myplayer.ui.home;
+package com.wenjian.myplayer.ui.main.home;
 
 
 import android.graphics.Color;
@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wenjian.myplayer.R;
-import com.wenjian.myplayer.data.network.model.ShowDetail;
+import com.wenjian.myplayer.entity.ShowDetail;
 import com.wenjian.myplayer.ui.base.AppBaseFragment;
 
 import java.util.List;

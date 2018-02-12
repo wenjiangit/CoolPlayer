@@ -1,7 +1,7 @@
-package com.wenjian.myplayer.ui.finder;
+package com.wenjian.myplayer.ui.main.finder;
 
 import com.wenjian.core.mvp.base.MvpPresenter;
-import com.wenjian.myplayer.data.network.model.VideoDetail;
+import com.wenjian.myplayer.entity.VideoDetail;
 import com.wenjian.myplayer.ui.base.AppView;
 
 import java.util.List;

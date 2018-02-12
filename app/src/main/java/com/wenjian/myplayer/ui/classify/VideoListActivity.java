@@ -12,10 +12,10 @@ import android.text.TextUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wenjian.myplayer.R;
 import com.wenjian.myplayer.data.db.source.collection.Collection;
-import com.wenjian.myplayer.data.network.model.VideoDisplay;
-import com.wenjian.myplayer.data.network.model.VideoListInfo;
+import com.wenjian.myplayer.entity.VideoDisplay;
+import com.wenjian.myplayer.entity.VideoListInfo;
 import com.wenjian.myplayer.ui.base.AppBaseActivity;
-import com.wenjian.myplayer.ui.home.SubRecyclerAdapter;
+import com.wenjian.myplayer.ui.main.home.SubRecyclerAdapter;
 import com.wenjian.myplayer.widget.CommonTitleBar;
 
 import java.util.ArrayList;

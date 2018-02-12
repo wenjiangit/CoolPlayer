@@ -1,4 +1,4 @@
-package com.wenjian.myplayer.ui.finder;
+package com.wenjian.myplayer.ui.main.finder;
 
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.wenjian.myplayer.R;
-import com.wenjian.myplayer.data.network.model.VideoDetail;
+import com.wenjian.myplayer.entity.VideoDetail;
 import com.wenjian.myplayer.ui.videoplay.VideoPlayActivity;
 
 import java.util.List;
