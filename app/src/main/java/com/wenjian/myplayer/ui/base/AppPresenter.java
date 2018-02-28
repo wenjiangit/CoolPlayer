@@ -6,8 +6,8 @@ import com.wenjian.myplayer.R;
 import com.wenjian.myplayer.data.AppDataManager;
 import com.wenjian.myplayer.data.DataManager;
 import com.wenjian.myplayer.entity.ApiResponse;
-import com.wenjian.myplayer.rx.AppSchedulerProvider;
-import com.wenjian.myplayer.rx.SchedulerProvider;
+import com.wenjian.myplayer.utils.rx.AppSchedulerProvider;
+import com.wenjian.myplayer.utils.rx.SchedulerProvider;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -25,7 +25,7 @@ public class AppPresenter<V extends AppView> extends LifeMvpPresenter<V> {
     protected final String TAG = this.getClass().getSimpleName();
 
     private final DataManager mDataManager;
-    private final CompositeDisposable mCompositeDisposable;
+    private CompositeDisposable mCompositeDisposable;
 
     private Consumer<Throwable> mThrowableConsumer = new Consumer<Throwable>() {
         @Override
@@ -38,7 +38,6 @@ public class AppPresenter<V extends AppView> extends LifeMvpPresenter<V> {
 
     public AppPresenter() {
         mDataManager = AppDataManager.getInstance();
-        mCompositeDisposable = new CompositeDisposable();
     }
 
     protected DataManager getDataManager() {
@@ -46,6 +45,9 @@ public class AppPresenter<V extends AppView> extends LifeMvpPresenter<V> {
     }
 
     protected void addDisposable(Disposable disposable) {
+        if (mCompositeDisposable == null) {
+            mCompositeDisposable = new CompositeDisposable();
+        }
         mCompositeDisposable.add(disposable);
     }
 
@@ -61,6 +63,8 @@ public class AppPresenter<V extends AppView> extends LifeMvpPresenter<V> {
 
     @Override
     public void onDestroy() {
-        mCompositeDisposable.clear();
+        if (mCompositeDisposable != null) {
+            mCompositeDisposable.clear();
+        }
     }
 }

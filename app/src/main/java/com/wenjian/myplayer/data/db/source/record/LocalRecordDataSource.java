@@ -3,11 +3,13 @@ package com.wenjian.myplayer.data.db.source.record;
 import android.support.annotation.NonNull;
 
 import com.wenjian.myplayer.AppExecutors;
-import com.wenjian.myplayer.data.db.source.DataSource;
 
 import java.lang.ref.WeakReference;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.Callable;
+
+import io.reactivex.Flowable;
 
 /**
  * Description: LocalRecordDataSource
@@ -71,8 +73,13 @@ public class LocalRecordDataSource implements RecordDataSource {
     }
 
     @Override
-    public List<Record> loadAll() {
-        return mRecordDao.getRecords();
+    public Flowable<List<Record>> loadAll() {
+        return Flowable.fromCallable(new Callable<List<Record>>() {
+            @Override
+            public List<Record> call() throws Exception {
+                return mRecordDao.getRecords();
+            }
+        });
     }
 
     @Override
@@ -90,8 +97,13 @@ public class LocalRecordDataSource implements RecordDataSource {
 
 
     @Override
-    public Record getRecordById(String id) {
-        return mRecordDao.getRecordById(id);
+    public Flowable<Record> getRecordById(final String id) {
+        return Flowable.fromCallable(new Callable<Record>() {
+            @Override
+            public Record call() throws Exception {
+                return mRecordDao.getRecordById(id);
+            }
+        });
     }
 
     @Override

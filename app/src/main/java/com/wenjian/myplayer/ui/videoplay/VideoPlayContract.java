@@ -94,6 +94,12 @@ public class VideoPlayContract {
         void addCollection(Collection collection);
 
 
+        void refresh(String mediaId);
+
+
+        void loadMore();
+
+
     }
 
 }

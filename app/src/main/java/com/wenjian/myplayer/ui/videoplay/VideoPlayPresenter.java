@@ -1,20 +1,27 @@
 package com.wenjian.myplayer.ui.videoplay;
 
 import android.text.TextUtils;
+import android.util.Pair;
 
 import com.wenjian.core.utils.Logger;
 import com.wenjian.myplayer.data.db.source.collection.Collection;
+import com.wenjian.myplayer.data.db.source.collection.CollectionDataSource;
 import com.wenjian.myplayer.data.db.source.record.Record;
+import com.wenjian.myplayer.data.db.source.record.RecordDataSource;
 import com.wenjian.myplayer.data.network.HttpEngine;
 import com.wenjian.myplayer.entity.ApiResponse;
 import com.wenjian.myplayer.entity.Comment;
 import com.wenjian.myplayer.entity.CommentInfo;
 import com.wenjian.myplayer.entity.VideoInfo;
 import com.wenjian.myplayer.ui.base.AppPresenter;
+import com.wenjian.myplayer.utils.rx.RxUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -29,33 +36,15 @@ public class VideoPlayPresenter extends AppPresenter<VideoPlayContract.View>
 
     private int mPageNum = 1;
 
-    @Override
-    public void loadVideoInfo(String mediaId) {
-        if (TextUtils.isEmpty(mediaId)) {
-            getView().showMessage("mediaId is empty ...");
-            return;
-        }
-        getView().showLoading();
+    private String mMediaId;
 
-        Disposable videoInfoDisposable = HttpEngine.getInstance()
-                .service()
-                .videoDetail(mediaId)
-                .subscribe(new Consumer<ApiResponse<VideoInfo>>() {
-                    @Override
-                    public void accept(ApiResponse<VideoInfo> apiResponse) throws Exception {
-                        getView().hideLoading();
-                        Logger.d(TAG, "loadVideoInfo >>> %s", apiResponse);
-                        if (apiResponse.isSuccess()) {
-                            VideoInfo videoInfo = apiResponse.getRet();
-                            getView().onLoadSuccess(videoInfo);
-                            buildVideoDesc(videoInfo);
-                        } else {
-                            handleApiError(apiResponse);
-                        }
-                    }
-                }, providerExHandler());
+    private RecordDataSource mRecordDataSource;
 
-        addDisposable(videoInfoDisposable);
+    private CollectionDataSource mCollectionDataSource;
+
+    VideoPlayPresenter(RecordDataSource recordDataSource, CollectionDataSource collectionDataSource) {
+        mRecordDataSource = recordDataSource;
+        mCollectionDataSource = collectionDataSource;
     }
 
     @Override
@@ -99,13 +88,89 @@ public class VideoPlayPresenter extends AppPresenter<VideoPlayContract.View>
     }
 
     @Override
+    public void loadVideoInfo(String mediaId) {
+        if (TextUtils.isEmpty(mediaId)) {
+            getView().showMessage("mediaId is empty ...");
+            return;
+        }
+        getView().showLoading();
+
+        Disposable videoInfoDisposable = HttpEngine.getInstance()
+                .service()
+                .videoDetail(mediaId)
+                .subscribe(new Consumer<ApiResponse<VideoInfo>>() {
+                    @Override
+                    public void accept(ApiResponse<VideoInfo> apiResponse) throws Exception {
+                        getView().hideLoading();
+                        Logger.d(TAG, "loadVideoInfo >>> %s", apiResponse);
+                        if (apiResponse.isSuccess()) {
+                            VideoInfo videoInfo = apiResponse.getRet();
+                            getView().onLoadSuccess(videoInfo);
+                            buildVideoDesc(videoInfo);
+                        } else {
+                            handleApiError(apiResponse);
+                        }
+                    }
+                }, providerExHandler());
+
+        addDisposable(videoInfoDisposable);
+    }
+
+    @Override
     public void saveRecord(Record record) {
-        getDataManager().getRecordDataSource().saveSingle(record);
+        mRecordDataSource.saveSingle(record);
     }
 
     @Override
     public void addCollection(Collection collection) {
-        getDataManager().getCollectionDataSource().saveSingle(collection);
+        mCollectionDataSource.saveSingle(collection);
+    }
+
+    @Override
+    public void refresh(String mediaId) {
+        if (TextUtils.isEmpty(mediaId)) {
+            getView().showMessage("mediaId is empty ...");
+            return;
+        }
+        this.mMediaId = mediaId;
+        this.mPageNum = 1;
+        getView().showLoading();
+        Flowable<ApiResponse<CommentInfo>> commentFlowable = HttpEngine.getInstance().service().getCommentList(mediaId, String.valueOf(mPageNum));
+        Flowable<ApiResponse<VideoInfo>> videoFlowable = HttpEngine.getInstance().service().videoDetail(mediaId);
+
+        Flowable.zip(commentFlowable, videoFlowable, new BiFunction<ApiResponse<CommentInfo>,
+                ApiResponse<VideoInfo>, Pair<ApiResponse<CommentInfo>, ApiResponse<VideoInfo>>>() {
+            @Override
+            public Pair<ApiResponse<CommentInfo>, ApiResponse<VideoInfo>> apply(ApiResponse<CommentInfo> apiResponse,
+                                                                                ApiResponse<VideoInfo> apiResponse2) throws Exception {
+                return Pair.create(apiResponse, apiResponse2);
+            }
+        }).compose(RxUtils.<Pair<ApiResponse<CommentInfo>, ApiResponse<VideoInfo>>>transfor())
+                .subscribe(new Consumer<Pair<ApiResponse<CommentInfo>, ApiResponse<VideoInfo>>>() {
+                    @Override
+                    public void accept(Pair<ApiResponse<CommentInfo>, ApiResponse<VideoInfo>> pair) throws Exception {
+                        getView().hideLoading();
+                        handleCommentResp(pair.first);
+                        handleVideoResp(pair.second);
+                    }
+                }, providerExHandler());
+
+
+    }
+
+    private void handleVideoResp(ApiResponse<VideoInfo> second) {
+        final VideoInfo videoInfo = second.getRet();
+        getView().onLoadSuccess(videoInfo);
+        buildVideoDesc(videoInfo);
+    }
+
+    private void handleCommentResp(ApiResponse<CommentInfo> first) {
+        getView().onCommentLoaded(first.getRet().getCommentList());
+    }
+
+    @Override
+    public void loadMore() {
+        getCommentList(mMediaId, true);
     }
 
     private void buildVideoDesc(VideoInfo result) {

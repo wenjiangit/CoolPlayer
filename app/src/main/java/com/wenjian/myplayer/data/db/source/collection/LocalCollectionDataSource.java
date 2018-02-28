@@ -6,6 +6,9 @@ import com.wenjian.myplayer.AppExecutors;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.concurrent.Callable;
+
+import io.reactivex.Flowable;
 
 /**
  * Description: LocalCollectionDataSource
@@ -41,6 +44,7 @@ public class LocalCollectionDataSource implements CollectionDataSource {
     @Override
     public void saveList(java.util.Collection<Collection> dataList) {
         mCollectionDao.saveCollection(dataList.toArray(new Collection[0]));
+
     }
 
     @Override
@@ -65,8 +69,13 @@ public class LocalCollectionDataSource implements CollectionDataSource {
     }
 
     @Override
-    public List<Collection> loadAll() {
-        return mCollectionDao.getCollections();
+    public Flowable<List<Collection>> loadAll() {
+        return Flowable.fromCallable(new Callable<List<Collection>>() {
+            @Override
+            public List<Collection> call() throws Exception {
+                return mCollectionDao.getCollections();
+            }
+        });
     }
 
     @Override

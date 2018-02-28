@@ -3,10 +3,13 @@ package com.wenjian.myplayer.ui.record;
 import android.util.Log;
 
 import com.wenjian.myplayer.data.db.source.record.Record;
-import com.wenjian.myplayer.data.db.source.DataSource;
+import com.wenjian.myplayer.data.db.source.record.RecordDataSource;
 import com.wenjian.myplayer.ui.base.AppPresenter;
+import com.wenjian.myplayer.utils.rx.RxUtils;
 
 import java.util.List;
+
+import io.reactivex.functions.Consumer;
 
 /**
  * Description: RecordPresenter
@@ -20,31 +23,32 @@ public class RecordPresenter extends AppPresenter<RecordContract.View>
 
     private static final String TAG = "RecordPresenter";
 
+    private final RecordDataSource mRecordDataSource;
+
+    RecordPresenter(RecordDataSource recordDataSource) {
+        mRecordDataSource = recordDataSource;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public void loadData() {
         getView().showLoading();
-        getDataManager().getRecordDataSource().loadAllAsync(new DataSource.LoadCallback<Record>() {
-            @Override
-            public void onDataLoaded(List<Record> records) {
-                if (!isActive()) {
-                    return;
-                }
-                getView().hideLoading();
-                getView().setEditEnable(true);
-                getView().onLoadSuccess(records);
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-                if (!isActive()) {
-                    return;
-                }
-                getView().hideLoading();
-                getView().setEditEnable(false);
-            }
-
-        });
+        addDisposable(mRecordDataSource.loadAll()
+                .compose(RxUtils.<List<Record>>transfor())
+                .subscribe(new Consumer<List<Record>>() {
+                    @Override
+                    public void accept(List<Record> recordList) throws Exception {
+                        getView().hideLoading();
+                        getView().onLoadSuccess(recordList);
+                        getView().setEditEnable(recordList.size() != 0);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        getView().hideLoading();
+                        getView().showMessage(throwable.getMessage());
+                    }
+                }));
     }
 
     @Override
@@ -54,7 +58,7 @@ public class RecordPresenter extends AppPresenter<RecordContract.View>
         }
         long start = System.currentTimeMillis();
         for (String recordId : recordIds) {
-            getDataManager().getRecordDataSource().deleteRecordById(recordId);
+            mRecordDataSource.deleteRecordById(recordId);
         }
         long time = System.currentTimeMillis() - start;
         Log.d(TAG, "deleteRecords: " + time);

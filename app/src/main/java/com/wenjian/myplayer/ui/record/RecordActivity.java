@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.wenjian.core.widget.recycler.DefaultItemDecoration;
 import com.wenjian.myplayer.R;
 import com.wenjian.myplayer.data.db.source.record.Record;
+import com.wenjian.myplayer.di.Injector;
 import com.wenjian.myplayer.ui.base.AppBaseActivity;
 import com.wenjian.myplayer.widget.CommonTitleBar;
 
@@ -116,7 +117,7 @@ public class RecordActivity extends AppBaseActivity<RecordContract.View, RecordC
 
     @Override
     public RecordContract.Presenter createPresenter() {
-        return new RecordPresenter();
+        return new RecordPresenter(Injector.provideRecordDataSource(this));
     }
 
     @Override

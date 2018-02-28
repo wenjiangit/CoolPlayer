@@ -1,4 +1,4 @@
-package com.wenjian.myplayer.rx;
+package com.wenjian.myplayer.utils.rx;
 
 import io.reactivex.Scheduler;
 

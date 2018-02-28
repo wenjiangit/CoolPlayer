@@ -5,8 +5,8 @@ import com.wenjian.myplayer.entity.CommentInfo;
 import com.wenjian.myplayer.entity.HomeRsp;
 import com.wenjian.myplayer.entity.VideoInfo;
 import com.wenjian.myplayer.entity.VideoListInfo;
-import com.wenjian.myplayer.rx.AppSchedulerProvider;
-import com.wenjian.myplayer.rx.SchedulerProvider;
+import com.wenjian.myplayer.utils.rx.AppSchedulerProvider;
+import com.wenjian.myplayer.utils.rx.SchedulerProvider;
 
 import io.reactivex.Flowable;
 

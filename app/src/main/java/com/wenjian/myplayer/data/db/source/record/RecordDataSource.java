@@ -5,6 +5,8 @@ import com.wenjian.myplayer.data.db.source.record.Record;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
+
 /**
  * Description: RecordDataSource
  * Date: 2018/2/1
@@ -14,7 +16,7 @@ import java.util.List;
 
 public interface RecordDataSource extends DataSource<Record> {
 
-    Record getRecordById(String id);
+    Flowable<Record> getRecordById(String id);
 
     void deleteRecordById(String id);
 

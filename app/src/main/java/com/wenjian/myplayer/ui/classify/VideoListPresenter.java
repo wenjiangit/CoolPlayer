@@ -1,12 +1,13 @@
 package com.wenjian.myplayer.ui.classify;
 
 import com.wenjian.core.utils.Logger;
-import com.wenjian.myplayer.data.db.source.DataSource;
 import com.wenjian.myplayer.data.db.source.collection.Collection;
+import com.wenjian.myplayer.data.db.source.collection.CollectionDataSource;
 import com.wenjian.myplayer.data.network.HttpEngine;
 import com.wenjian.myplayer.entity.ApiResponse;
 import com.wenjian.myplayer.entity.VideoListInfo;
 import com.wenjian.myplayer.ui.base.AppPresenter;
+import com.wenjian.myplayer.utils.rx.RxUtils;
 
 import java.util.List;
 
@@ -24,6 +25,12 @@ public class VideoListPresenter extends AppPresenter<VideoListContract.View>
 
     private int mPagerNum = 1;
 
+    private CollectionDataSource mCollectionDataSource;
+
+    VideoListPresenter(CollectionDataSource collectionDataSource) {
+        mCollectionDataSource = collectionDataSource;
+    }
+
     @Override
     public void getVideoList(String catalogId, final boolean isLoadMore) {
         if (!isLoadMore) {
@@ -34,8 +41,6 @@ public class VideoListPresenter extends AppPresenter<VideoListContract.View>
         HttpEngine.getInstance()
                 .service()
                 .getVideoList(catalogId, String.valueOf(mPagerNum))
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().mainThread())
                 .subscribe(new Consumer<ApiResponse<VideoListInfo>>() {
                     @Override
                     public void accept(ApiResponse<VideoListInfo> response) throws Exception {
@@ -61,25 +66,21 @@ public class VideoListPresenter extends AppPresenter<VideoListContract.View>
     @Override
     public void loadAllCollections() {
         getView().showLoading();
-        getDataManager().getCollectionDataSource().loadAllAsync(new DataSource.LoadCallback<Collection>() {
-            @Override
-            public void onDataLoaded(List<Collection> dataList) {
-                if (!isActive()) {
-                    return;
-                }
-                getView().hideLoading();
-                getView().onCollectionLoaded(dataList);
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-                if (!isActive()) {
-                    return;
-                }
-                getView().hideLoading();
-                getView().showMessage("没有数据!");
-            }
-        });
+        addDisposable(mCollectionDataSource.loadAll()
+                .compose(RxUtils.<List<Collection>>transfor())
+                .subscribe(new Consumer<List<Collection>>() {
+                    @Override
+                    public void accept(List<Collection> collections) throws Exception {
+                        getView().hideLoading();
+                        getView().onCollectionLoaded(collections);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        getView().hideLoading();
+                        getView().showMessage(throwable.getMessage());
+                    }
+                }));
 
     }
 }

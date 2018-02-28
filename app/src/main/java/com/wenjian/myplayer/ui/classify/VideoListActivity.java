@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wenjian.myplayer.R;
 import com.wenjian.myplayer.data.db.source.collection.Collection;
+import com.wenjian.myplayer.di.Injector;
 import com.wenjian.myplayer.entity.VideoDisplay;
 import com.wenjian.myplayer.entity.VideoListInfo;
 import com.wenjian.myplayer.ui.base.AppBaseActivity;
@@ -101,7 +102,7 @@ public class VideoListActivity extends AppBaseActivity<VideoListContract.View, V
 
     @Override
     public VideoListContract.Presenter createPresenter() {
-        return new VideoListPresenter();
+        return new VideoListPresenter(Injector.provideCollectionDataSource(this));
     }
 
     @Override

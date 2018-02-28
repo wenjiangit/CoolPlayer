@@ -3,6 +3,8 @@ package com.wenjian.myplayer.data.db.source;
 import java.util.Collection;
 import java.util.List;
 
+import io.reactivex.Flowable;
+
 /**
  * Description: DataSource
  * Date: 2018/2/1
@@ -25,7 +27,7 @@ public interface DataSource<T> {
 
     void saveSingle(T data);
 
-    List<T> loadAll();
+    Flowable<List<T>> loadAll();
 
     void loadAllAsync(LoadCallback<T> callback);
 

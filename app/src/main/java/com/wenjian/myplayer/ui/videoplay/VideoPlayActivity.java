@@ -18,6 +18,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wenjian.myplayer.R;
 import com.wenjian.myplayer.data.db.source.collection.Collection;
 import com.wenjian.myplayer.data.db.source.record.Record;
+import com.wenjian.myplayer.di.Injector;
 import com.wenjian.myplayer.entity.Comment;
 import com.wenjian.myplayer.entity.VideoDetail;
 import com.wenjian.myplayer.entity.VideoInfo;
@@ -125,7 +126,8 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
         mCommentAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                getPresenter().getCommentList(mDataId, isLoadMore = true);
+                isLoadMore = true;
+                getPresenter().loadMore();
             }
         }, mCommentRecycler);
 
@@ -138,8 +140,8 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
     }
 
     private void loadData() {
-        getPresenter().loadVideoInfo(mDataId);
-        getPresenter().getCommentList(mDataId, isLoadMore = false);
+        isLoadMore = false;
+        getPresenter().refresh(mDataId);
     }
 
     private void setupVideoPlayer() {
@@ -210,7 +212,8 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
 
     @Override
     public VideoPlayContract.Presenter createPresenter() {
-        return new VideoPlayPresenter();
+        return new VideoPlayPresenter(Injector.provideRecordDataSource(this),
+                Injector.provideCollectionDataSource(this));
     }
 
     @Override
@@ -278,7 +281,7 @@ public class VideoPlayActivity extends AppBaseActivity<VideoPlayContract.View, V
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         if (intent.getExtras() != null) {
-            mVideoDetail = intent.getExtras().getParcelable(EXTRA_VIDEO_SRC);
+            mDataId = intent.getExtras().getString(EXTRA_DATA_ID);
             loadData();
         }
     }

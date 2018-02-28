@@ -3,6 +3,7 @@ package com.wenjian.myplayer.utils;
 import android.support.annotation.NonNull;
 
 import com.wenjian.core.utils.NetworkUtils;
+import com.wenjian.myplayer.BuildConfig;
 import com.wenjian.myplayer.MoviesApp;
 
 import java.io.File;
@@ -15,6 +16,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * Description: OkhttpUtils
@@ -84,6 +86,12 @@ public class OkhttpUtils {
                 return response;
             }
         };
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        if (BuildConfig.DEBUG) {
+            builder.addInterceptor(logging);
+        }
+
         builder.cache(cache);
         builder.addInterceptor(cacheInterceptor);
         builder.addNetworkInterceptor(cacheInterceptor);
