@@ -41,6 +41,10 @@ public class BaseThreadFactory implements ThreadFactory {
         return thread;
     }
 
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
 
     public static class Builder {
 
@@ -49,11 +53,6 @@ public class BaseThreadFactory implements ThreadFactory {
         private boolean daemon = false;
 
         private int priority = Thread.NORM_PRIORITY;
-
-
-        public static Builder builder() {
-            return new Builder();
-        }
 
         public BaseThreadFactory build() {
             return new BaseThreadFactory(this);

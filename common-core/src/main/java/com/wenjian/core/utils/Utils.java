@@ -25,7 +25,7 @@ public class Utils {
         Logger.init();
     }
 
-    static Application getAppContext() {
+    public static Application getAppContext() {
         if (sApplication == null) {
             throw new NullPointerException("you need init first");
         }

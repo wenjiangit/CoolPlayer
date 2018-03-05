@@ -16,7 +16,6 @@ import com.wenjian.myplayer.entity.VideoInfo;
 import com.wenjian.myplayer.ui.base.AppPresenter;
 import com.wenjian.myplayer.utils.rx.RxUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Flowable;

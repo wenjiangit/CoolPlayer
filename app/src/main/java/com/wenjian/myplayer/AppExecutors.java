@@ -55,15 +55,16 @@ public class AppExecutors {
     }
 
 
-    static class MainThreadExecutor extends Handler implements Executor {
+    static class MainThreadExecutor  implements Executor {
+
+        Handler mHandler = new Handler();
 
         MainThreadExecutor() {
-            super(Looper.getMainLooper());
         }
 
         @Override
         public void execute(@NonNull Runnable command) {
-            post(command);
+            mHandler.post(command);
         }
     }
 }
