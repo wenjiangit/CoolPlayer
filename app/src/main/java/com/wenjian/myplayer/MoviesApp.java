@@ -1,11 +1,11 @@
 package com.wenjian.myplayer;
 
 import android.app.Application;
-import android.content.Context;
 
-import com.wenjian.core.utils.CrashUtils;
-import com.wenjian.core.utils.Utils;
-import com.wenjian.myplayer.data.AppDataManager;
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.wenjian.base.data.db.PlayerDatabase;
+import com.wenjian.base.utils.Utils;
+
 
 /**
  * Description: MoviesApp
@@ -16,22 +16,24 @@ import com.wenjian.myplayer.data.AppDataManager;
 
 public class MoviesApp extends Application {
 
-    public static Context sContext;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        sContext = this;
         //初始化数据层
-        AppDataManager.init(this);
+
+        if (BuildConfig.DEBUG) {
+            ARouter.openLog();
+            ARouter.openDebug();
+        }
+
+
+        PlayerDatabase.init(this);
+        ARouter.init(this);
+
         //初始化工具层
         Utils.init(this);
-        CrashUtils.init();
-    }
-
-
-    public static Context getContext() {
-        return sContext;
+//        CrashUtils.init();
     }
 
 

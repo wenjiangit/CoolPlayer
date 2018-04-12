@@ -1,0 +1,75 @@
+ext {
+
+    isModule = true
+
+    android = [
+            compileSdk              : 26,
+            minSdk                  : 16,
+            targetSdk               : 26,
+            versionCode             : 1,
+            versionName             : "1.0",
+            buildToolsVersion       : '26.0.2',
+            supportVersion          : "26.1.0",
+            constraintVersion       : "1.0.2",
+            butterknifeVersion      : "8.8.1",
+            glideVersion            : '3.7.0',
+            rx2FastAndroidNetworking: '1.0.1',
+            retrofitVersion         : '2.3.0',
+            dagger2Version          : '2.8',
+            rxjava2Version          : '2.0.6',
+            rxandroidVersion        : '2.0.1',
+            gsonVersion             : '2.8.0',
+            timberVersion           : '4.5.1',
+            roomVersion             : "1.0.0",
+            recyclerAdapterHelper   : '2.9.30',
+            matisseVersion          : "0.4.3"
+
+    ]
+
+    appId = [
+            app : "com.wenjian.myplayer",
+            home: "com.wenjian.home",
+            finder: "com.wenjian.finder",
+            videoplay: "com.wenjian.videoplay"
+    ]
+
+
+
+
+    dependencies =
+            [
+                    "appcompat-v7"                 : "com.android.support:appcompat-v7:$android.supportVersion",
+                    "recyclerview-v7"              : "com.android.support:recyclerview-v7:$android.supportVersion",
+                    "support-v4"                   : "com.android.support:support-v4:$android.supportVersion",
+                    "design"                       : "com.android.support:design:$android.supportVersion",
+                    "cardview-v7"                  : "com.android.support:cardview-v7:$android.supportVersion",
+                    "rxjava"                       : "io.reactivex.rxjava2:rxjava:$android.rxjava2Version",
+                    "rxandroid"                    : "io.reactivex.rxjava2:rxandroid:$android.rxandroidVersion",
+                    "retrofit"                     : "com.squareup.retrofit2:retrofit:$android.retrofitVersion",
+                    "adapter-rxjava2"              : "com.squareup.retrofit2:adapter-rxjava2:$android.retrofitVersion",
+                    "converter-gson"               : "com.squareup.retrofit2:converter-gson:$android.retrofitVersion",
+                    "butterknife"                  : "com.jakewharton:butterknife:$android.butterknifeVersion",
+                    "butterknife-compiler"         : "com.jakewharton:butterknife-compiler:$android.butterknifeVersion",
+                    "gson"                         : "com.google.code.gson:gson:$android.gsonVersion",
+                    "glide"                        : "com.github.bumptech.glide:glide:$android.glideVersion",
+                    "BaseRecyclerViewAdapterHelper": "com.github.CymChad:BaseRecyclerViewAdapterHelper:$android.recyclerAdapterHelper",
+                    "logging-interceptor"          : "com.squareup.okhttp3:logging-interceptor:3.8.1",
+                    "room-rxjava2"                 : "android.arch.persistence.room:rxjava2:1.0.0",
+                    "cardstack"                    : "com.daprlabs.aaron:cardstack:0.3.1-beta0",
+                    "MZBannerView"                 : "com.github.pinguo-zhouwei:MZBannerView:v2.0.0",
+                    "constraint-layout"            : "com.android.support.constraint:constraint-layout:1.0.2",
+                    "circleimageview"              : "de.hdodenhof:circleimageview:2.2.0",
+                    "room-runtime"                 : "android.arch.persistence.room:runtime:$android.roomVersion",
+                    "timber"                       : "com.jakewharton.timber:timber:$android.timberVersion",
+                    "matisse"                      : "com.zhihu.android:matisse:$android.matisseVersion"
+
+            ]
+
+
+    ap = [
+            "room-compiler": "android.arch.persistence.room:compiler:$android.roomVersion",
+
+    ]
+
+
+}

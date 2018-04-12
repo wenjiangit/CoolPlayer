@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.wenjian.myplayer.AppExecutors;
 import com.wenjian.myplayer.data.db.PlayerDatabase;
 import com.wenjian.myplayer.data.db.source.DataSource;
 

@@ -1,21 +1,29 @@
 apply plugin: 'com.android.application'
 
+def appId = rootProject.ext.appId
+def cfg = rootProject.ext.android
+def deps = rootProject.ext.dependencies
+
 android {
-    compileSdkVersion 26
+    compileSdkVersion cfg.compileSdk
     defaultConfig {
-        applicationId "com.wenjian.myplayer"
-        minSdkVersion 16
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        applicationId appId['app']
+        minSdkVersion cfg.minSdk
+        targetSdkVersion cfg.targetSdk
+        versionCode cfg.versionCode
+        versionName cfg.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = ["room.schemaLocation":
-                                     "$projectDir/schemas".toString()]
+                                     "$projectDir/schemas".toString(),
+                             moduleName           : project.getName()]
             }
         }
+
+
+
     }
     buildTypes {
 
@@ -33,46 +41,31 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:' + rootProject.supportVersion
-    implementation 'com.android.support:support-v4:' + rootProject.supportVersion
-    implementation 'com.android.support:design:' + rootProject.supportVersion
-    implementation "com.android.support:cardview-v7:$rootProject.supportVersion"
-    implementation 'com.jakewharton:butterknife:' + rootProject.butterknifeVersion
-    implementation 'com.android.support:support-v4:26.1.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:' + rootProject.butterknifeVersion
-    // image
-    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
-    // parser
-    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
-    // reactive
-    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjava2Version"
-    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:' + rootProject.recyclerAdapterHelper
-
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-
-    implementation 'com.google.dagger:dagger:2.11'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
-
-    implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
-    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
-
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
-
-    implementation "android.arch.persistence.room:rxjava2:1.0.0"
-
-    implementation 'com.daprlabs.aaron:cardstack:0.3.1-beta0'
-
-    implementation 'com.zhihu.android:matisse:0.4.3'
-
-    implementation 'com.github.pinguo-zhouwei:MZBannerView:v2.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation 'de.hdodenhof:circleimageview:2.2.0'
-    testImplementation 'junit:junit:4.12'
+    implementation deps["appcompat-v7"]
+    implementation deps["support-v4"]
+    implementation deps["design"]
+
+    implementation deps["butterknife"]
+    annotationProcessor deps["butterknife-compiler"]
+    implementation deps["circleimageview"]
+    implementation deps["room-runtime"]
+
+    implementation 'com.alibaba:arouter-api:1.3.1'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
+
+
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    implementation project(':common-core')
-    implementation project(':nicevideoplayer')
+    testImplementation 'junit:junit:4.12'
+
+    implementation project(':base')
+
+    if (isModule) {
+        implementation project(':home')
+        implementation project(':finder')
+        implementation project(':mine')
+        implementation project(':videoplay')
+    }
+
 }

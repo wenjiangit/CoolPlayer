@@ -1,0 +1,79 @@
+if (isModule) {
+    apply plugin: 'com.android.library'
+    apply plugin: 'com.jakewharton.butterknife'
+}else {
+    apply plugin: 'com.android.application'
+}
+
+
+def cfg = rootProject.ext.android
+def appId = rootProject.ext.appId
+def deps = rootProject.ext.dependencies
+android {
+    compileSdkVersion cfg.compileSdk
+
+    defaultConfig {
+        if (!isModule) {
+            applicationId appId.home
+        }
+
+        minSdkVersion cfg.minSdk
+        targetSdkVersion cfg.targetSdk
+        versionCode cfg.versionCode
+        versionName cfg.versionName
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+        sourceSets{
+            main{
+                //在组件模式下 使用不同的manifest文件
+                if(!isModule){
+                    manifest.srcFile 'src/main/module/AndroidManifest.xml'
+                    java.srcDirs 'src/main/module/java','src/main/java'
+                }else{
+                    manifest.srcFile 'src/main/AndroidManifest.xml'
+                }
+            }
+        }
+
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation deps["recyclerview-v7"]
+    implementation deps["cardview-v7"]
+    implementation deps["appcompat-v7"]
+    implementation deps["rxjava"]
+    implementation deps["BaseRecyclerViewAdapterHelper"]
+    implementation deps["glide"]
+    implementation deps["matisse"]
+    implementation deps["design"]
+    implementation deps["room-runtime"]
+    implementation deps["circleimageview"]
+    implementation deps["butterknife"]
+    annotationProcessor deps["butterknife-compiler"]
+    implementation deps["MZBannerView"]
+    implementation project(':base')
+    implementation 'com.alibaba:arouter-api:1.3.1'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
+}

@@ -1,2 +1,2 @@
-include ':app',':common-core',':nicevideoplayer'
+include ':app',':common-core',':nicevideoplayer', ':base', ':home', ':finder', ':videoplay', ':mine', ':web'
 

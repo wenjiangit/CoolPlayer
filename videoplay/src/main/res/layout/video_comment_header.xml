@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tv_video_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:lineSpacingExtra="@dimen/dp_4"
+        android:padding="10dp"
+        android:textColor="@color/textSecond"
+        android:textSize="14sp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/guess_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginTop="6dp"
+        android:padding="10dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_comment_label"
+            android:text="@string/label_comment"
+            android:textSize="14sp"
+            android:textColor="@color/textDark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textSize="12sp"
+            android:layout_toRightOf="@id/tv_comment_label"
+            android:layout_marginLeft="10dp"
+            android:layout_alignBaseline="@id/tv_comment_label"
+            android:textColor="@color/textSecond"
+            android:id="@+id/tv_comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:layout_below="@id/tv_comment_label"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_search_edit"
+            android:hint="@string/label_i_say_something"
+            android:textColor="@color/white"
+            android:paddingLeft="20dp"
+            android:textSize="12sp"
+            android:layout_width="match_parent"
+            android:layout_height="28dp" />
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

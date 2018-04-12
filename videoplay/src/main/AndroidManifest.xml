@@ -1,0 +1,13 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wenjian.videoplay" >
+
+
+    <application >
+
+        <activity android:name=".list.VideoListActivity"/>
+
+        <activity android:name=".VideoPlayActivity"/>
+
+    </application>
+
+</manifest>

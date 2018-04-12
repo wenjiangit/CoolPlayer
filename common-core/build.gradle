@@ -1,13 +1,17 @@
 apply plugin: 'com.android.library'
 
+def cfg = rootProject.ext.android
+def deps = rootProject.ext.dependencies
+
 android {
-    compileSdkVersion rootProject.compileSdk
+    compileSdkVersion cfg.compileSdk
 
     defaultConfig {
-        minSdkVersion rootProject.minSdk
-        targetSdkVersion rootProject.targetSdk
-        versionCode rootProject.versionCode
-        versionName rootProject.versionName
+
+        minSdkVersion cfg.minSdk
+        targetSdkVersion cfg.targetSdk
+        versionCode cfg.versionCode
+        versionName cfg.versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -32,12 +36,12 @@ tasks.withType(JavaCompile) {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:' + rootProject.supportVersion
-    implementation 'com.android.support:recyclerview-v7:' + rootProject.supportVersion
-    implementation 'com.jakewharton:butterknife:' + rootProject.butterknifeVersion
-    annotationProcessor 'com.jakewharton:butterknife-compiler:' + rootProject.butterknifeVersion
-    // logger
-    implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
+    implementation deps['appcompat-v7']
+    implementation deps['recyclerview-v7']
+    implementation deps.butterknife
+    annotationProcessor 'com.jakewharton:butterknife-compiler:' + cfg.butterknifeVersion
+    implementation deps.timber
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:0.5'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'

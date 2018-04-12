@@ -124,7 +124,9 @@ public abstract class BaseRecyclerAdapter<Data> extends RecyclerView.Adapter<Bas
         return mDataList;
     }
 
-    //更新当前holder的数据
+    /**
+     * 更新当前holder的数据
+     */
     @Override
     public void update(Data data, ViewHolder<Data> holder) {
         int pos = holder.getAdapterPosition();

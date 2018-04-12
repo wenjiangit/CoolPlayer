@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="@color/colorAccent">
+
+        <com.wenjian.base.widget.CommonTitleBar
+            android:id="@+id/title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="25dp">
+
+        </com.wenjian.base.widget.CommonTitleBar>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <com.daprlabs.cardstack.SwipeFrameLayout
+        android:id="@+id/lay_swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_alpha_10"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.daprlabs.cardstack.SwipeDeck
+            android:id="@+id/swipe_deck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            app:card_spacing="10dp"
+            app:max_visible="3"
+            app:render_below="true"
+            app:rotation_degrees="15">
+
+        </com.daprlabs.cardstack.SwipeDeck>
+
+    </com.daprlabs.cardstack.SwipeFrameLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>
