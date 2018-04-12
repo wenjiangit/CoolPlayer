@@ -2,7 +2,6 @@ apply plugin: 'com.android.library'
 
 def cfg = rootProject.ext.android
 def deps = rootProject.ext.dependencies
-def ap = rootProject.ext.ap
 android {
     compileSdkVersion cfg.compileSdk
 
@@ -55,10 +54,10 @@ dependencies {
     implementation deps["MZBannerView"]
     implementation deps["BaseRecyclerViewAdapterHelper"]
     implementation deps["room-runtime"]
-    annotationProcessor ap['room-compiler']
+    annotationProcessor deps['room-compiler']
 
-    implementation 'com.alibaba:arouter-api:1.3.1'
-    annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
+    implementation deps["arouter-api"]
+    annotationProcessor deps["arouter-compiler"]
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

@@ -65,9 +65,10 @@ dependencies {
     implementation deps["appcompat-v7"]
     implementation deps["BaseRecyclerViewAdapterHelper"]
     implementation deps["glide"]
+    implementation deps["arouter-api"]
+    annotationProcessor deps["arouter-compiler"]
     implementation deps["butterknife"]
     annotationProcessor deps["butterknife-compiler"]
     implementation project(':base')
-    implementation 'com.alibaba:arouter-api:1.3.1'
-    annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
+
 }
